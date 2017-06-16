@@ -34,7 +34,7 @@ CREATE TABLE ownerships (
 
 DROP TABLE IF EXISTS transactions;
 CREATE TABLE transactions (
-  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id int NOT NULL PRIMARY KEY,
   operation varchar(255) NOT NULL,
   type varchar(255) NOT NULL,
   status boolean
