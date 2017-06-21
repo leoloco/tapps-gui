@@ -96,6 +96,7 @@ class UsersController extends AppController
     {
         $user = null;
         $users = TableRegistry::get('Users');
+        $tapps = TableRegistry::get('Tapps');
         if ($this->request->is(['patch', 'post', 'put'])) {
             $request = $this->request->getData();
             $query = $users->find('all')
@@ -137,13 +138,29 @@ class UsersController extends AppController
                                 'headers' => ['Authorization' => 'Bearer '.$token, 'Accept: application/json']
                             ]);
                             $response = $http->get($url);
-                            /*
+                            
                             foreach ($response->json as $elements)
-                                foreach ($elements as $element)
-                                    $this->Flash->success($element);*/
-                            $this->Flash->success($token);
-                            foreach ($response->json as $element)
-                                    $this->Flash->success($element);
+                            {
+                                if(is_array($elements)){
+                                    if($tapps->find()->where(['id' => $elements['id']])->isEmpty())
+                                    {
+                                        $query1 = $tapps->query();
+                                        $query1->insert(['id','name','cdn_uri','cdn_login','cdn_password','user_id'])
+                                                ->values([
+                                                    'id' => $elements['id'],
+                                                    'name' => $elements['name'],
+                                                    'cdn_uri' => '0',
+                                                    'cdn_login' => '0',
+                                                    'cdn_password' => '0',
+                                                    'user_id' => $user['id'],
+                                                ])
+                                                ->execute();
+                                    }
+                                }
+                                else {
+                                    $this->Flash->error("Problem retrieving your apps : ".$elements['error_code']);
+                                }
+                            }
                             return $this->redirect($this->Auth->redirectUrl());
                         }
                     }
