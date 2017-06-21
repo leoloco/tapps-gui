@@ -3,7 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-
+use Cake\ORM\TableRegistry;
+use Cake\Http\Client;
 /**
  * Users Controller
  *
@@ -89,6 +90,73 @@ class UsersController extends AppController
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
+    
+    
+    public function ssoLogin($id = null)
+    {
+        $user = null;
+        $users = TableRegistry::get('Users');
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $request = $this->request->getData();
+            $query = $users->find('all')
+                ->where(['Users.email =' => $request['email']]);
+            if($query->first()==null)
+            {
+                $this->Flash->error("You don't have an account here, buy the tas licence on thingPark, you will be automatically provided an account on this platform");
+            }
+            else
+            {
+                
+                $http = new Client();
+                $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=5minutes";
+                $data_string = 'grant_type=client_credentials&client_id=poc-api%2F'.urlencode($request['email']).'&client_secret='.$request['password'];
+                $headers = array(
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'Accept: application/json',
+                );
+                
+                $response = $http->post(
+                    $url,
+                    $data_string,
+                    ['headers' => $headers]
+                );
+ 
+                if(isset($response->json['access_token']))
+                {
+                    $token = $response->json['access_token'];
+                    $user = $this->Users->get($query->first()['id'], [
+                    'contain' => []
+                    ]);
+                    $user = $this->Users->patchEntity($user, $request);
+                    if ($this->Users->save($user)) {
+                        $user = $this->Auth->identify();
+                        if ($user) {
+                            $this->Auth->setUser($user);
+                            $url = "https://dx-api.thingpark.com/core/latest/api/applications";
+                            $http = new Client([
+                                'headers' => ['Authorization' => 'Bearer '.$token, 'Accept: application/json']
+                            ]);
+                            $response = $http->get($url);
+                            /*
+                            foreach ($response->json as $elements)
+                                foreach ($elements as $element)
+                                    $this->Flash->success($element);*/
+                            $this->Flash->success($token);
+                            foreach ($response->json as $element)
+                                    $this->Flash->success($element);
+                            return $this->redirect($this->Auth->redirectUrl());
+                        }
+                    }
+                }
+                else
+                {
+                    $this->Flash->error('Wrong password');
+                }
+            }
+        }
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
+    }
 
     /**
      * Delete method
@@ -124,6 +192,7 @@ class UsersController extends AppController
     public function login()
     {
         if ($this->request->is('post')) {
+            
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
