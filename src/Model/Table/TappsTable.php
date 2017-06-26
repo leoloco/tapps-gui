@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Tapps Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Tps
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\HasMany $Ownerships
  *
@@ -37,6 +38,10 @@ class TappsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Tps', [
+            'foreignKey' => 'tp_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
@@ -55,6 +60,7 @@ class TappsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
+            ->integer('id')
             ->allowEmpty('id', 'create');
 
         $validator
@@ -89,6 +95,7 @@ class TappsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['tp_id'], 'Tps'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;

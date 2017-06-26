@@ -18,6 +18,7 @@
     <fieldset>
         <legend><?= __('Add Tapp') ?></legend>
         <?php
+            echo $this->Form->control('tp_id');
             echo $this->Form->control('name');
             echo $this->Form->control('version_latest');
             echo $this->Form->control('cdn_uri');

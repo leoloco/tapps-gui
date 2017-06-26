@@ -19,6 +19,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('tp_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('version_latest') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('cdn_uri') ?></th>
@@ -31,7 +32,8 @@
         <tbody>
             <?php foreach ($tapps as $tapp): ?>
             <tr>
-                <td><?= h($tapp->id) ?></td>
+                <td><?= $this->Number->format($tapp->id) ?></td>
+                <td><?= h($tapp->tp_id) ?></td>
                 <td><?= h($tapp->name) ?></td>
                 <td><?= h($tapp->version_latest) ?></td>
                 <td><?= h($tapp->cdn_uri) ?></td>

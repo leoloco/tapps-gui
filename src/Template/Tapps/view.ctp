@@ -20,8 +20,8 @@
     <h3><?= h($tapp->name) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= h($tapp->id) ?></td>
+            <th scope="row"><?= __('Tp Id') ?></th>
+            <td><?= h($tapp->tp_id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Name') ?></th>
@@ -46,6 +46,10 @@
         <tr>
             <th scope="row"><?= __('User') ?></th>
             <td><?= $tapp->has('user') ? $this->Html->link($tapp->user->name, ['controller' => 'Users', 'action' => 'view', $tapp->user->id]) : '' ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Id') ?></th>
+            <td><?= $this->Number->format($tapp->id) ?></td>
         </tr>
     </table>
     <div class="related">

@@ -147,12 +147,12 @@ class UsersController extends AppController
                             foreach ($response->json as $elements)
                             {
                                 if(is_array($elements)){
-                                    if($tapps->find()->where(['id' => $elements['id']])->isEmpty())
+                                    if($tapps->find()->where(['tp_id' => $elements['id']])->isEmpty())
                                     {
                                         $query1 = $tapps->query();
-                                        $query1->insert(['id','name','cdn_uri','cdn_login','cdn_password','user_id'])
+                                        $query1->insert(['tp_id','name','cdn_uri','cdn_login','cdn_password','user_id'])
                                                 ->values([
-                                                    'id' => $elements['id'],
+                                                    'tp_id' => $elements['id'],
                                                     'name' => $elements['name'],
                                                     'cdn_uri' => '0',
                                                     'cdn_login' => '0',

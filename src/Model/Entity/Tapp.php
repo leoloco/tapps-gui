@@ -6,7 +6,8 @@ use Cake\ORM\Entity;
 /**
  * Tapp Entity
  *
- * @property string $id
+ * @property int $id
+ * @property string $tp_id
  * @property string $name
  * @property string $version_latest
  * @property string $cdn_uri
