@@ -55,7 +55,6 @@ class TappsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
             ->allowEmpty('id', 'create');
 
         $validator
@@ -93,12 +92,5 @@ class TappsTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;
-    }
-    
-    
-    
-    public function isOwnedBy($tappId, $userId)
-    {
-        return $this->exists(['id' => $tappId, 'user_id' => $userId]);
     }
 }

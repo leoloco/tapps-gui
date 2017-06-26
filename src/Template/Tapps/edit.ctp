@@ -32,6 +32,6 @@
             echo $this->Form->control('user_id', ['options' => $users]);
         ?>
     </fieldset>
-    <?= $this->Form->button('Submit', array('formnovalidate' => true)); ?>
+    <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>

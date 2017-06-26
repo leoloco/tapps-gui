@@ -26,7 +26,8 @@ class TappsTableTest extends TestCase
     public $fixtures = [
         'app.tapps',
         'app.users',
-        'app.ownerships'
+        'app.ownerships',
+        'app.devices'
     ];
 
     /**
@@ -79,6 +80,16 @@ class TappsTableTest extends TestCase
      * @return void
      */
     public function testBuildRules()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test isOwnedBy method
+     *
+     * @return void
+     */
+    public function testIsOwnedBy()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

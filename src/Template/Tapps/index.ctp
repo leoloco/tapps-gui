@@ -31,7 +31,7 @@
         <tbody>
             <?php foreach ($tapps as $tapp): ?>
             <tr>
-                <td><?= $this->Number->format($tapp->id) ?></td>
+                <td><?= h($tapp->id) ?></td>
                 <td><?= h($tapp->name) ?></td>
                 <td><?= h($tapp->version_latest) ?></td>
                 <td><?= h($tapp->cdn_uri) ?></td>

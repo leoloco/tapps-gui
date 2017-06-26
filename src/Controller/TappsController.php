@@ -56,9 +56,8 @@ class TappsController extends AppController
         $tapp = $this->Tapps->newEntity();
         if ($this->request->is('post')) {
             $tapp = $this->Tapps->patchEntity($tapp, $this->request->getData());
-            $tapp->user_id = $this->Auth->user('id');
             if ($this->Tapps->save($tapp)) {
-                $this->Flash->success(__('The new application has been saved'));
+                $this->Flash->success(__('The tapp has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -68,9 +67,6 @@ class TappsController extends AppController
         $this->set(compact('tapp', 'users'));
         $this->set('_serialize', ['tapp']);
     }
-    
-    
-    
 
     /**
      * Edit method
@@ -117,30 +113,4 @@ class TappsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-    
-    
-    public function isAuthorized($user)
-    {
-        // Tous les utilisateurs enregistrés peuvent ajouter des articles
-        if ($this->request->getParam('action') === 'add') {
-            if($user['type']==='appmanager')
-            {
-                return true;
-            }
-        }
-        if ($this->request->getParam('action') === 'index') {
-            return true;
-        }
-        // The owner of an app can modify or delete it
-        if (in_array($this->request->getParam('action'), ['edit', 'delete']) && $user['type']==='appmanager') {
-            $tappId = (int)$this->request->getParam('pass.0');
-            if ($this->Tapps->isOwnedBy($tappId, $user['id'])) {
-                return true;
-            }
-        }
-        return parent::isAuthorized($user);
-    }
-
-    
-    
 }

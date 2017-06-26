@@ -18,7 +18,8 @@ class TappsControllerTest extends IntegrationTestCase
     public $fixtures = [
         'app.tapps',
         'app.users',
-        'app.ownerships'
+        'app.ownerships',
+        'app.devices'
     ];
 
     /**

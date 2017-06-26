@@ -23,8 +23,9 @@
             echo $this->Form->control('cdn_uri');
             echo $this->Form->control('cdn_login');
             echo $this->Form->control('cdn_password');
+            echo $this->Form->control('user_id', ['options' => $users]);
         ?>
     </fieldset>
-    <?= $this->Form->button('Submit', array('formnovalidate' => true)); ?>
+    <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
