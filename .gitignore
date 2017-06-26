@@ -1,3 +1,4 @@
+/config/app.php
 /tmp/cache/models/*
 !/tmp/cache/models/empty
 /tmp/cache/persistent/*
