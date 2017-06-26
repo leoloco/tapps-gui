@@ -95,19 +95,24 @@ class UsersController extends AppController
     public function ssoLogin($id = null)
     {
         $user = null;
+        //Importing user table
         $users = TableRegistry::get('Users');
+        //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
         if ($this->request->is(['patch', 'post', 'put'])) {
+            //Retrieving mail and password provided by the user
             $request = $this->request->getData();
+            //Checking if user exists
             $query = $users->find('all')
                 ->where(['Users.email =' => $request['email']]);
             if($query->first()==null)
             {
+                //If the user has bought the tapps licence then an account has been provisionned on this platform
                 $this->Flash->error("You don't have an account here, buy the tas licence on thingPark, you will be automatically provided an account on this platform");
             }
             else
             {
-                
+                //Trying to generate API Token based on credentials provided by the user
                 $http = new Client();
                 $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=5minutes";
                 $data_string = 'grant_type=client_credentials&client_id=poc-api%2F'.urlencode($request['email']).'&client_secret='.$request['password'];
@@ -115,13 +120,13 @@ class UsersController extends AppController
                     'Content-Type: application/x-www-form-urlencoded',
                     'Accept: application/json',
                 );
-                
                 $response = $http->post(
                     $url,
                     $data_string,
                     ['headers' => $headers]
                 );
- 
+                
+                //If the provided credentials where valid then a token has been generated
                 if(isset($response->json['access_token']))
                 {
                     $token = $response->json['access_token'];
