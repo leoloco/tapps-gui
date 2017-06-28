@@ -7,6 +7,7 @@ use Cake\ORM\Entity;
  * Device Entity
  *
  * @property int $id
+ * @property string $tp_id
  * @property string $name
  * @property \Cake\I18n\FrozenTime $creation_date
  *

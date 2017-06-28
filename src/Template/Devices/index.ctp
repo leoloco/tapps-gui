@@ -17,6 +17,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('tp_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('creation_date') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -26,6 +27,7 @@
             <?php foreach ($devices as $device): ?>
             <tr>
                 <td><?= $this->Number->format($device->id) ?></td>
+                <td><?= h($device->tp_id) ?></td>
                 <td><?= h($device->name) ?></td>
                 <td><?= h($device->creation_date) ?></td>
                 <td class="actions">

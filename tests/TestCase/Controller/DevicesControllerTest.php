@@ -17,7 +17,10 @@ class DevicesControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.devices',
-        'app.ownerships'
+        'app.ownerships',
+        'app.users',
+        'app.tapps',
+        'app.tps'
     ];
 
     /**
