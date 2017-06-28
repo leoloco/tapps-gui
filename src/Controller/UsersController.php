@@ -107,7 +107,7 @@ class UsersController extends AppController
             $request = $this->request->getData();
             //Checking if user exists
             $query = $users->find('all')
-                ->where(['Users.email =' => $request['email']]);
+                ->where(['Users.email' => $request['email']]);
             if($query->first()==null)
             {
                 //If the user has bought the tapps licence then an account has been provisionned on this platform
@@ -137,7 +137,7 @@ class UsersController extends AppController
                     'contain' => []
                     ]);
                     $user = $this->Users->patchEntity($user, $request);
-                    $user['API_KEY']= $response->json['access_token'];
+                    $user->API_KEY = $response->json['access_token'];
                     if ($this->Users->save($user)) {
                         $user = $this->Auth->identify();
                         if ($user) {
