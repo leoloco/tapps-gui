@@ -96,7 +96,7 @@ class UsersController extends AppController
     public function ssoLogin($id = null)
     {
         $user = null;
-        //Importing user table
+        //Importing users table
         $users = TableRegistry::get('Users');
         //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
@@ -117,7 +117,7 @@ class UsersController extends AppController
             {
                 //Trying to generate API Token based on credentials provided by the user
                 $http = new Client();
-                $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=5minutes";
+                $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=infinite";
                 $data_string = 'grant_type=client_credentials&client_id=poc-api%2F'.urlencode($request['email']).'&client_secret='.$request['password'];
                 $headers = array(
                     'Content-Type: application/x-www-form-urlencoded',
@@ -137,6 +137,7 @@ class UsersController extends AppController
                     'contain' => []
                     ]);
                     $user = $this->Users->patchEntity($user, $request);
+                    $user['API_KEY']= $response->json['access_token'];
                     if ($this->Users->save($user)) {
                         $user = $this->Auth->identify();
                         if ($user) {

@@ -50,5 +50,6 @@ CREATE TABLE users (
   email varchar(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   org varchar(255) NOT NULL,
-  type varchar(255) NOT NULL
+  type varchar(255) NOT NULL,
+  API_KEY TEXT
 );
