@@ -113,7 +113,7 @@ class UsersController extends AppController
             else
             {
                 //Trying to generate API Token based on credentials provided by the user
-                $response = generateToken(urlencode($request['email']), $request['password']);     
+                $response = $this->generateToken(urlencode($request['email']), $request['password']);     
                 //If the provided credentials where valid then a token has been generated
                 if(isset($response->json['access_token']))
                 {
@@ -127,7 +127,7 @@ class UsersController extends AppController
                         $user = $this->Auth->identify();
                         if ($user){
                             $this->Auth->setUser($user);
-                            retrieveDevicesApplications($user);
+                            $this->retrieveDevicesApplications($user);
                             return $this->redirect($this->Auth->redirectUrl());
                         }
                     }
