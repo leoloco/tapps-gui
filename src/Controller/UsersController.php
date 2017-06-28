@@ -99,6 +99,8 @@ class UsersController extends AppController
         $users = TableRegistry::get('Users');
         //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
+        //Importing devices table
+        $devices = TableRegistry::get('Devices');
         if ($this->request->is(['patch', 'post', 'put'])) {
             //Retrieving mail and password provided by the user
             $request = $this->request->getData();
@@ -147,23 +149,38 @@ class UsersController extends AppController
                             foreach ($response->json as $elements)
                             {
                                 if(is_array($elements)){
-                                    if($tapps->find()->where(['tp_id' => $elements['id']])->isEmpty())
-                                    {
-                                        $query1 = $tapps->query();
-                                        $query1->insert(['tp_id','name','cdn_uri','cdn_login','cdn_password','user_id'])
-                                                ->values([
-                                                    'tp_id' => $elements['id'],
-                                                    'name' => $elements['name'],
-                                                    'cdn_uri' => '0',
-                                                    'cdn_login' => '0',
-                                                    'cdn_password' => '0',
-                                                    'user_id' => $user['id'],
-                                                ])
-                                                ->execute();
+                                    if(strpos($elements['id'], 'device') !== false){
+                                        if($devices->find()->where(['tp_id' => $elements['id']])->isEmpty()){
+                                            $query2=$devices->query();
+                                            $query2->insert(['tp_id','name'])
+                                                    ->values([
+                                                        'tp_id' => $elements['id'],
+                                                        'name' => $elements['name'],
+                                                    ])
+                                                    ->execute();
+                                        }
+                                        
+                                    }  elseif (strpos($elements['id'], 'application') !== false) {
+                                        if($tapps->find()->where(['tp_id' => $elements['id']])->isEmpty())
+                                        {
+                                            $query1 = $tapps->query();
+                                            $query1->insert(['tp_id','name','cdn_uri','cdn_login','cdn_password','user_id'])
+                                                    ->values([
+                                                        'tp_id' => $elements['id'],
+                                                        'name' => $elements['name'],
+                                                        'cdn_uri' => '0',
+                                                        'cdn_login' => '0',
+                                                        'cdn_password' => '0',
+                                                        'user_id' => $user['id'],
+                                                    ])
+                                                    ->execute();
+                                        }
                                     }
+                                    
+                                    
                                 }
                                 else {
-                                    $this->Flash->error("Problem retrieving your apps : ".$elements['error_code']);
+                                    $this->Flash->error("Problem retrieving your apps or devices : ".$elements['error_code']);
                                 }
                             }
                             return $this->redirect($this->Auth->redirectUrl());

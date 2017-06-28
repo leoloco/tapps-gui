@@ -16,7 +16,8 @@ CREATE TABLE tapps (
 
 DROP TABLE IF EXISTS devices;
 CREATE TABLE devices (
-  id varchar(255) NOT NULL PRIMARY KEY,
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  tp_id varchar(255) NOT NULL,
   name varchar(255) NOT NULL,
   creation_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
