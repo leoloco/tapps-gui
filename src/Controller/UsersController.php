@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Http\Client;
+use Cake\I18n\Time;
 /**
  * Users Controller
  *
@@ -145,17 +146,17 @@ class UsersController extends AppController
                                 'headers' => ['Authorization' => 'Bearer '.$token, 'Accept: application/json']
                             ]);
                             $response = $http->get($url);
-                            
                             foreach ($response->json as $elements)
                             {
                                 if(is_array($elements)){
                                     if(strpos($elements['id'], 'device') !== false){
                                         if($devices->find()->where(['tp_id' => $elements['id']])->isEmpty()){
                                             $query2=$devices->query();
-                                            $query2->insert(['tp_id','name'])
+                                            $query2->insert(['tp_id','name','creation_date'])
                                                     ->values([
                                                         'tp_id' => $elements['id'],
                                                         'name' => $elements['name'],
+                                                        'creation_date' => Time::now(),
                                                     ])
                                                     ->execute();
                                         }
