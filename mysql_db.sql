@@ -19,7 +19,7 @@ CREATE TABLE devices (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   tp_id varchar(255) NOT NULL,
   name varchar(255) NOT NULL,
-  creation_date datetime NOT NULL DEFAULT '0'
+  creation_date datetime NOT NULL
 );
 
 DROP TABLE IF EXISTS ownerships;
