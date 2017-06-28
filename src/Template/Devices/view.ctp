@@ -18,6 +18,10 @@
     <h3><?= h($device->name) ?></h3>
     <table class="vertical-table">
         <tr>
+            <th scope="row"><?= __('Tp Id') ?></th>
+            <td><?= h($device->tp_id) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Name') ?></th>
             <td><?= h($device->name) ?></td>
         </tr>

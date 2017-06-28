@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Devices Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Tps
  * @property \Cake\ORM\Association\HasMany $Ownerships
  *
  * @method \App\Model\Entity\Device get($primaryKey, $options = [])
@@ -36,6 +37,10 @@ class DevicesTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Tps', [
+            'foreignKey' => 'tp_id',
+            'joinType' => 'INNER'
+        ]);
         $this->hasMany('Ownerships', [
             'foreignKey' => 'device_id'
         ]);
@@ -63,5 +68,19 @@ class DevicesTable extends Table
             ->notEmpty('creation_date');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['tp_id'], 'Tps'));
+
+        return $rules;
     }
 }
