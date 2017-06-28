@@ -93,15 +93,12 @@ class UsersController extends AppController
     }
     
     
-    public function ssoLogin($id = null)
+    public function ssoLogin()
     {
         $user = null;
         //Importing users table
         $users = TableRegistry::get('Users');
-        //Importing tapps table
-        $tapps = TableRegistry::get('Tapps');
-        //Importing devices table
-        $devices = TableRegistry::get('Devices');
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
             //Retrieving mail and password provided by the user
             $request = $this->request->getData();
@@ -116,19 +113,7 @@ class UsersController extends AppController
             else
             {
                 //Trying to generate API Token based on credentials provided by the user
-                $http = new Client();
-                $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=infinite";
-                $data_string = 'grant_type=client_credentials&client_id=poc-api%2F'.urlencode($request['email']).'&client_secret='.$request['password'];
-                $headers = array(
-                    'Content-Type: application/x-www-form-urlencoded',
-                    'Accept: application/json',
-                );
-                $response = $http->post(
-                    $url,
-                    $data_string,
-                    ['headers' => $headers]
-                );
-                
+                $response = generateToken(urlencode($request['email']), $request['password']);     
                 //If the provided credentials where valid then a token has been generated
                 if(isset($response->json['access_token']))
                 {
@@ -140,51 +125,9 @@ class UsersController extends AppController
                     $user->API_KEY = $response->json['access_token'];
                     if ($this->Users->save($user)) {
                         $user = $this->Auth->identify();
-                        if ($user) {
+                        if ($user){
                             $this->Auth->setUser($user);
-                            $url = "https://dx-api.thingpark.com/core/latest/api/applications";
-                            $http = new Client([
-                                'headers' => ['Authorization' => 'Bearer '.$token, 'Accept: application/json']
-                            ]);
-                            $response = $http->get($url);
-                            foreach ($response->json as $elements)
-                            {
-                                if(is_array($elements)){
-                                    if(strpos($elements['id'], 'device') !== false){
-                                        if($devices->find()->where(['tp_id' => $elements['id']])->isEmpty()){
-                                            $query2=$devices->query();
-                                            $query2->insert(['tp_id','name','creation_date'])
-                                                    ->values([
-                                                        'tp_id' => $elements['id'],
-                                                        'name' => $elements['name'],
-                                                        'creation_date' => Time::now(),
-                                                    ])
-                                                    ->execute();
-                                        }
-                                        
-                                    }  elseif (strpos($elements['id'], 'application') !== false) {
-                                        if($tapps->find()->where(['tp_id' => $elements['id']])->isEmpty())
-                                        {
-                                            $query1 = $tapps->query();
-                                            $query1->insert(['tp_id','name','cdn_uri','cdn_login','cdn_password','user_id'])
-                                                    ->values([
-                                                        'tp_id' => $elements['id'],
-                                                        'name' => $elements['name'],
-                                                        'cdn_uri' => '0',
-                                                        'cdn_login' => '0',
-                                                        'cdn_password' => '0',
-                                                        'user_id' => $user['id'],
-                                                    ])
-                                                    ->execute();
-                                        }
-                                    }
-                                    
-                                    
-                                }
-                                else {
-                                    $this->Flash->error("Problem retrieving your apps or devices : ".$elements['error_code']);
-                                }
-                            }
+                            retrieveDevicesApplications($user);
                             return $this->redirect($this->Auth->redirectUrl());
                         }
                     }
@@ -197,6 +140,70 @@ class UsersController extends AppController
         }
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
+    }
+    
+    public function retrieveDevicesApplications($user){
+        //Importing tapps table
+        $tapps = TableRegistry::get('Tapps');
+        //Importing devices table
+        $devices = TableRegistry::get('Devices');
+        $url = "https://dx-api.thingpark.com/core/latest/api/applications";
+        $http = new Client([
+            'headers' => ['Authorization' => 'Bearer '.$user->API_KEY, 'Accept: application/json']
+        ]);
+        $response = $http->get($url);
+        foreach ($response->json as $elements){
+            if(is_array($elements)){
+                if(strpos($elements['id'], 'device') !== false){
+                    if($devices->find()->where(['tp_id' => $elements['id']])->isEmpty()){
+                        $query2=$devices->query();
+                        $query2->insert(['tp_id','name','creation_date'])
+                                ->values([
+                                    'tp_id' => $elements['id'],
+                                    'name' => $elements['name'],
+                                    'creation_date' => Time::now(),
+                                ])
+                                ->execute();
+                    }
+
+                }  elseif (strpos($elements['id'], 'application') !== false) {
+                    if($tapps->find()->where(['tp_id' => $elements['id']])->isEmpty())
+                    {
+                        $query1 = $tapps->query();
+                        $query1->insert(['tp_id','name','cdn_uri','cdn_login','cdn_password','user_id'])
+                                ->values([
+                                    'tp_id' => $elements['id'],
+                                    'name' => $elements['name'],
+                                    'cdn_uri' => '0',
+                                    'cdn_login' => '0',
+                                    'cdn_password' => '0',
+                                    'user_id' => $user['id'],
+                                ])
+                                ->execute();
+                    }
+                }
+
+            }
+            else {
+                $this->Flash->error("Problem retrieving your apps or devices : ".$elements['error_code']);
+            }
+        }
+    }
+    
+    public function generateToken($email, $pass){
+        $http = new Client();
+                $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=infinite";
+                $data_string = 'grant_type=client_credentials&client_id=poc-api%2F'.$email.'&client_secret='.$pass;
+                $headers = array(
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'Accept: application/json',
+                );
+                $response = $http->post(
+                    $url,
+                    $data_string,
+                    ['headers' => $headers]
+                );
+                return $response;
     }
 
     /**
