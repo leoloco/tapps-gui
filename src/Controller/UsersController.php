@@ -149,7 +149,7 @@ class UsersController extends AppController
         $devices = TableRegistry::get('Devices');
         $url = "https://dx-api.thingpark.com/core/latest/api/applications";
         $http = new Client([
-            'headers' => ['Authorization' => 'Bearer '.$user->API_KEY, 'Accept: application/json']
+            'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
         ]);
         $response = $http->get($url);
         foreach ($response->json as $elements){
