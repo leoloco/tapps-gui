@@ -44,7 +44,7 @@ CREATE TABLE transactions (
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-  id int NOT NULL PRIMARY KEY,
+  id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   username varchar(255) NOT NULL,
   name varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
