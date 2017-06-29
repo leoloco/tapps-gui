@@ -84,7 +84,7 @@ class UsersController extends AppController
         ]);
         $response = $http->get($url);
         
-        $this->Flash->error($response);
+        $this->Flash->error($response->json);
         if(isset($reponse->json['id']))
         {
             return $reponse->json['id'];
