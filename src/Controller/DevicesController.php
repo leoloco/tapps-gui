@@ -38,6 +38,7 @@ class DevicesController extends AppController
         $device = $this->Devices->get($id, [
             'contain' => ['Ownerships']
         ]);
+        AppController::retrieveDevicesApplications($this->Auth->user());
         $this->set('device', $device);
         $this->set('_serialize', ['device']);
     }
