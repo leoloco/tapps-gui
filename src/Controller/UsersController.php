@@ -60,6 +60,9 @@ class UsersController extends AppController
             $response = $this->generateToken(urlencode($request['email']), $request['password']);
             if(isset($response->json['access_token'])){
                 $user->API_KEY = $response->json['access_token'];
+                if($request['type']==='vendor'){
+                    $user->tp_id = $this->retrieveTpIdVendor($response->json['access_token']);
+                }
                 if ($this->Users->save($user)) {
                     $this->Flash->success(__('The user has been saved.'));
                     return $this->redirect(['action' => 'index']);
@@ -73,6 +76,19 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
+    public function retrieveTpIdVendor($token){
+        $url = "https://dx-api.thingpark.com/core/latest/api/vendors";
+        $http = new Client([
+            'headers' => ['Authorization' => 'Bearer '.$token, 'Accept: application/json']
+        ]);
+        $response = $http->get($url);
+        if(isset($reponse->json['id']))
+        {
+            return $reponse->json['id'];
+        }else {
+            return 0;
+        }
+    }
     /**
      * Edit method
      *
