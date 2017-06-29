@@ -56,7 +56,7 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            $requet = $this->request->getData();
+            $request = $this->request->getData();
             $response = $this->generateToken(urlencode($request['email']), $request['password']);
             if(isset($response->json['access_token'])){
                 $user->API_KEY = $response->json['access_token'];
