@@ -127,7 +127,7 @@ class UsersController extends AppController
                         $user = $this->Auth->identify();
                         if ($user){
                             $this->Auth->setUser($user);
-                            $this->retrieveDevicesApplications($user);
+                            retrieveDevicesApplications($user);
                             return $this->redirect($this->Auth->redirectUrl());
                         }
                     }
@@ -142,53 +142,7 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
     
-    public function retrieveDevicesApplications($user){
-        //Importing tapps table
-        $tapps = TableRegistry::get('Tapps');
-        //Importing devices table
-        $devices = TableRegistry::get('Devices');
-        $url = "https://dx-api.thingpark.com/core/latest/api/applications";
-        $http = new Client([
-            'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
-        ]);
-        $response = $http->get($url);
-        foreach ($response->json as $elements){
-            if(is_array($elements)){
-                if(strpos($elements['id'], 'device') !== false){
-                    if($devices->find()->where(['tp_id' => $elements['id']])->isEmpty()){
-                        $query2=$devices->query();
-                        $query2->insert(['tp_id','name','creation_date'])
-                                ->values([
-                                    'tp_id' => $elements['id'],
-                                    'name' => $elements['name'],
-                                    'creation_date' => Time::now(),
-                                ])
-                                ->execute();
-                    }
-
-                }  elseif (strpos($elements['id'], 'application') !== false) {
-                    if($tapps->find()->where(['tp_id' => $elements['id']])->isEmpty())
-                    {
-                        $query1 = $tapps->query();
-                        $query1->insert(['tp_id','name','cdn_uri','cdn_login','cdn_password','user_id'])
-                                ->values([
-                                    'tp_id' => $elements['id'],
-                                    'name' => $elements['name'],
-                                    'cdn_uri' => '0',
-                                    'cdn_login' => '0',
-                                    'cdn_password' => '0',
-                                    'user_id' => $user['id'],
-                                ])
-                                ->execute();
-                    }
-                }
-
-            }
-            else {
-                $this->Flash->error("Problem retrieving your apps or devices : ".$elements['error_code']);
-            }
-        }
-    }
+    
     
     public function generateToken($email, $pass){
         $http = new Client();
