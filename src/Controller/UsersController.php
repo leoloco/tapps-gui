@@ -96,12 +96,12 @@ class UsersController extends AppController
                 }
                 else
                 {
-                    $this->Flash->error($caca);
+                    //$this->Flash->error($caca);
                 }
 
             }
         }else{
-            $this->Flash->error($response->json);
+            //$this->Flash->error($response->json);
         }
         
             
