@@ -62,6 +62,7 @@ class UsersController extends AppController
                 $user->API_KEY = $response->json['access_token'];
                 if($request['type']==='vendor'){
                     $user->tp_id = $this->retrieveTpIdVendor($response->json['access_token']);
+                    $this->Flash->error("retrived token : ". $user->tp_id );
                 }
                 if ($this->Users->save($user)) {
                     $this->Flash->success(__('The user has been saved.'));
