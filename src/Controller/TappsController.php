@@ -20,6 +20,7 @@ class TappsController extends AppController
      */
     public function index()
     {
+        AppController::retrieveDevicesApplications($this->Auth->user());
         $this->paginate = [
             'contain' => ['Users']
         ];

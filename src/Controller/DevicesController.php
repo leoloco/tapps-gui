@@ -20,6 +20,7 @@ class DevicesController extends AppController
      */
     public function index()
     {
+        AppController::retrieveDevicesApplications($this->Auth->user());
         $devices = $this->paginate($this->Devices);
 
         $this->set(compact('devices'));
@@ -38,7 +39,6 @@ class DevicesController extends AppController
         $device = $this->Devices->get($id, [
             'contain' => ['Ownerships']
         ]);
-        AppController::retrieveDevicesApplications($this->Auth->user());
         $this->set('device', $device);
         $this->set('_serialize', ['device']);
     }
