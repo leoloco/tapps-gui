@@ -83,8 +83,28 @@ class UsersController extends AppController
             'headers' => ['Authorization' => 'Bearer '.$token, 'Accept: application/json']
         ]);
         $response = $http->get($url);
-        foreach ($response->json as $caca)
-            $this->Flash->error($caca);
+        if(is_array($response->json))
+        {
+            foreach ($response->json as $caca)
+            {
+                if(is_array($caca))
+                {
+                    foreach ($caca as $pipi)
+                    {
+                        $this->Flash->error($pipi);
+                    }
+                }
+                else
+                {
+                    $this->Flash->error($caca);
+                }
+
+            }
+        }else{
+            $this->Flash->error($response->json);
+        }
+        
+            
         if(isset($reponse->json['id']))
         {
             return $reponse->json['id'];
