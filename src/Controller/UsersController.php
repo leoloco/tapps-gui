@@ -85,29 +85,14 @@ class UsersController extends AppController
         $response = $http->get($url);
         if(is_array($response->json))
         {
-            foreach ($response->json as $caca)
+            foreach ($response->json as $elements)
             {
-                if(is_array($caca))
-                {
-                    foreach ($caca as $pipi)
-                    {
-                        $this->Flash->error($pipi);
-                    }
-                }
-                else
-                {
-                    //$this->Flash->error($caca);
-                }
-
+                $id = $elements['id'];
             }
-        }else{
-            //$this->Flash->error($response->json);
         }
-        
-            
-        if(isset($reponse->json['id']))
+        if(isset($id))
         {
-            return $reponse->json['id'];
+            return $id;
         }else {
             return 0;
         }
