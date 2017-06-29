@@ -56,12 +56,17 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+            $response = $this->generateToken(urlencode($request['email']), $request['password']);
+            if(isset($response->json['access_token'])){
+                $user->API_KEY = $response->json['access_token'];
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('The user has been saved.'));
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            }else{
+                $this->Flash->error(__('You don\'t have a ThingPark account'));
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
@@ -146,18 +151,18 @@ class UsersController extends AppController
     
     public function generateToken($email, $pass){
         $http = new Client();
-                $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=infinite";
-                $data_string = 'grant_type=client_credentials&client_id=poc-api%2F'.$email.'&client_secret='.$pass;
-                $headers = array(
-                    'Content-Type: application/x-www-form-urlencoded',
-                    'Accept: application/json',
-                );
-                $response = $http->post(
-                    $url,
-                    $data_string,
-                    ['headers' => $headers]
-                );
-                return $response;
+        $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=infinite";
+        $data_string = 'grant_type=client_credentials&client_id=poc-api%2F'.$email.'&client_secret='.$pass;
+        $headers = array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Accept: application/json',
+        );
+        $response = $http->post(
+            $url,
+            $data_string,
+            ['headers' => $headers]
+        );
+        return $response;
     }
 
     /**
