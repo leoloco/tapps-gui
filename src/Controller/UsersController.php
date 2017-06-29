@@ -176,7 +176,7 @@ class UsersController extends AppController
     
     public function generateToken($email, $pass){
         $http = new Client();
-        $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=true&validityPeriod=infinite";
+        $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=false&validityPeriod=infinite";
         $data_string = 'grant_type=client_credentials&client_id=poc-api%2F'.$email.'&client_secret='.$pass;
         $headers = array(
             'Content-Type: application/x-www-form-urlencoded',
