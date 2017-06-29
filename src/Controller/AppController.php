@@ -150,9 +150,6 @@ class AppController extends Controller
                 }
 
             }
-            else {
-                $this->Flash->error("Problem retrieving your apps or devices : ".$elements['error_code']);
-            }
         }
     }
     
