@@ -54,6 +54,67 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </ul>
         </div>
     </nav>
+     <nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <?php
+            if(isset($loggedIn)){
+                switch ($loggedIn['type']){
+                    case 'subscriber':
+                        echo "<li>";
+                        echo $this->Html->link(__('List Ownerships'), ['controller' => 'Ownerships', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Tapps'), ['controller' => 'Tapps', 'action' => 'index']);
+                        echo "</li>";
+                        break;
+                    case 'appmanager':
+                        echo "<li>";
+                        echo $this->Html->link(__('List Tapps'), ['controller' => 'Tapps', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('New Tapp'), ['controller' => 'Tapps', 'action' => 'add']);
+                        echo "</li>";
+                        break;
+                    case 'vendor':
+                        echo "<li>";
+                        echo $this->Html->link(__('List Tapps'), ['controller' => 'Tapps', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Ownerships'), ['controller' => 'Ownerships', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('New Ownership'), ['controller' => 'Ownerships', 'action' => 'add']);
+                        echo "</li>";
+                        break;
+                    case 'admin':
+                        echo "<li>";
+                        echo $this->Html->link(__('List Tapps'), ['controller' => 'Tapps', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Ownerships'), ['controller' => 'Ownerships', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Devices'), ['controller' => 'Devices', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Users'), ['controller'=>'Users', 'action' => 'index']);
+                        echo "</li>";
+                        break;
+                    default:
+                        echo "<li>";
+                        echo $this->Html->link(__('Add user'), ['action' => 'add']);
+                        echo "</li>";
+                        break;
+                }
+            } else {
+                echo "<li>";
+                echo $this->Html->link(__('Add user'), ['action' => 'add']);
+                echo "</li>";
+            }
+        ?> 
+    </ul>
+</nav>
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
         <?= $this->fetch('content') ?>
