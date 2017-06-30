@@ -4,7 +4,7 @@
   */
 ?>
 
-<div class="tapps view large-9 medium-8 columns content">
+<div class="tapps view large-12 medium-12 columns content">
     <h3><?= h($tapp->name) ?></h3>
     <table class="vertical-table">
         <tr>

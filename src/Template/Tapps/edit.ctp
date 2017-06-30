@@ -4,7 +4,7 @@
   */
 ?>
 
-<div class="tapps form large-9 medium-8 columns content">
+<div class="tapps form large-12 medium-12 columns content">
     <?= $this->Form->create($tapp) ?>
     <fieldset>
         <legend><?= __('Edit Tapp') ?></legend>

@@ -3,7 +3,7 @@
   * @var \App\View\AppView $this
   */
 ?>
-<div class="ownerships form large-9 medium-8 columns content">
+<div class="ownerships form large-12 medium-12 columns content">
     <?= $this->Form->create($ownership) ?>
     <fieldset>
         <legend><?= __('Add Ownership') ?></legend>

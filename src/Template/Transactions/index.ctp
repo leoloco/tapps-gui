@@ -4,7 +4,7 @@
   */
 ?>
 
-<div class="transactions index large-9 medium-8 columns content">
+<div class="transactions index large-12 medium-12 columns content">
     <h3><?= __('Transactions') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>

@@ -3,7 +3,7 @@
   * @var \App\View\AppView $this
   */
 ?>
-<div class="transactions view large-9 medium-8 columns content">
+<div class="transactions view large-12 medium-12 columns content">
     <h3><?= h($transaction->id) ?></h3>
     <table class="vertical-table">
         <tr>

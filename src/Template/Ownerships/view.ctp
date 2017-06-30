@@ -4,7 +4,7 @@
   */
 ?>
 
-<div class="ownerships view large-9 medium-8 columns content">
+<div class="ownerships view large-12 medium-12 columns content">
     <h3><?= h($ownership->id) ?></h3>
     <table class="vertical-table">
         <tr>

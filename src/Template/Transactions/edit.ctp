@@ -4,7 +4,7 @@
   */
 ?>
 
-<div class="transactions form large-9 medium-8 columns content">
+<div class="transactions form large-12 medium-12 columns content">
     <?= $this->Form->create($transaction) ?>
     <fieldset>
         <legend><?= __('Edit Transaction') ?></legend>
