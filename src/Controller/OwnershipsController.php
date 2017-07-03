@@ -127,6 +127,11 @@ class OwnershipsController extends AppController
         if ($this->request->getParam('action') === 'add' && $user['type']==='vendor') {
             return true;
         }
+        if ($this->request->getParam('action') === 'edit' && $user['type']==='subscriber') {
+            if( $user['tapp_id'] === $this->request->getParam('users_id')){
+                return true;
+            }
+        }
         return parent::isAuthorized($user);
     }
     

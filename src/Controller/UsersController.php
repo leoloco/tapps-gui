@@ -62,7 +62,9 @@ class UsersController extends AppController
                 $user->API_KEY = $response->json['access_token'];
                 if($request['type']==='vendor'){
                     $user->tp_id = $this->retrieveTpIdVendor($response->json['access_token']);
-                    $this->Flash->error("retrived token : ". $user->tp_id );
+                }
+                if($request['type']==='appmanager'){
+                    $user->tp_id = $this->retrieveTpIdSupplier($response->json['access_token']);
                 }
                 if ($this->Users->save($user)) {
                     $this->Flash->success(__('The user has been saved.'));
@@ -79,6 +81,26 @@ class UsersController extends AppController
 
     public function retrieveTpIdVendor($token){
         $url = "https://dx-api.thingpark.com/core/latest/api/vendors";
+        $http = new Client([
+            'headers' => ['Authorization' => 'Bearer '.$token, 'Accept: application/json']
+        ]);
+        $response = $http->get($url);
+        if(is_array($response->json))
+        {
+            foreach ($response->json as $elements)
+            {
+                $id = $elements['id'];
+            }
+        }
+        if(isset($id))
+        {
+            return $id;
+        }else {
+            return 0;
+        }
+    }
+    public function retrieveTpIdSupplier($token){
+        $url = "https://dx-api.thingpark.com/core/latest/api/suppliers";
         $http = new Client([
             'headers' => ['Authorization' => 'Bearer '.$token, 'Accept: application/json']
         ]);
@@ -236,6 +258,7 @@ class UsersController extends AppController
     
     public function logout()
     {
+        $loggedIn = $this->Auth->user();
         return $this->redirect($this->Auth->logout());
     }
     
