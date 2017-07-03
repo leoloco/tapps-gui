@@ -231,7 +231,12 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-
+    
+    public function logout()
+    {
+        $loggedIn = $this->Auth->user();
+        return $this->redirect($this->Auth->logout());
+    }
     
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -242,31 +247,10 @@ class UsersController extends AppController
         }
     }
     
-    
-    public function login()
-    {
-        if ($this->request->is('post')) {
-            
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
-            }
-            $this->Flash->error(__('Invalid username or password, try again'));
-        }
-    }
-    
-    public function logout()
-    {
-        $loggedIn = $this->Auth->user();
-        return $this->redirect($this->Auth->logout());
-    }
-    
-    
     public function isAuthorized($user)
     {
         // Tous les utilisateurs enregistrés peuvent ajouter des articles
-        if (in_array($this->request->getParam('action'), ['add','edit','delete']) && $user['id']===(int)$this->request->getParam('pass.0')) {
+        if (in_array($this->request->getParam('action'), ['edit','delete']) && $user['id']===(int)$this->request->getParam('pass.0')) {
             return true;
         }
         if ($this->request->getParam('action') === 'index') {
