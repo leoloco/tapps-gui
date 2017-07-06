@@ -51,6 +51,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         echo $this->Html->link('logout', ['controller' => 'users', 'action' => 'logout']);
                     ?>  
                 </li>
+                <li>
+                    <?php
+                        echo $this->Html->link('login', ['controller' => 'users', 'action' => 'ssoLogin']);
+                    ?>  
+                </li>
             </ul>
         </div>
     </nav>
