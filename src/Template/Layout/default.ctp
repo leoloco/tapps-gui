@@ -80,6 +80,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         echo "<li>";
                         echo $this->Html->link(__('New Tapp'), ['controller' => 'Tapps', 'action' => 'add']);
                         echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Devices'), ['controller' => 'Devices', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('New Device'), ['controller' => 'Devices', 'action' => 'add']);
+                        echo "</li>";
                         break;
                     case 'vendor':
                         echo "<li>";
