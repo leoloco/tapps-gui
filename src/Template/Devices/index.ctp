@@ -3,7 +3,7 @@
   * @var \App\View\AppView $this
   */
 ?>
-<div class="devices index large-9 medium-8 columns content">
+<div class="devices index large-12 medium-12 columns content">
     <h3><?= __('Devices') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
