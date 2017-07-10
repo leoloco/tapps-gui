@@ -21,7 +21,7 @@ class DevicesController extends AppController
      */
     public function index()
     {
-        AppController::retrieveDevicesApplications($this->Auth->user());
+        //AppController::retrieveDevicesApplications($this->Auth->user());
         $devices = $this->paginate($this->Devices);
 
         $this->set(compact('devices'));
