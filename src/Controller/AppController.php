@@ -108,7 +108,6 @@ class AppController extends Controller
      * @return \Cake\Network\Response|null|void
      */
     public function beforeFilter(Event $event) {
-        parent::beforeFilter($event);
         //$this->Auth->allow(['logout']);
         $this->Auth->allow();
         $loggedIn = $this->Auth->user();
