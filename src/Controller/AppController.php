@@ -106,7 +106,6 @@ class AppController extends Controller
      * 
      * @param \Cake\Event\Event $event The beforeFilter event
      * @return \Cake\Network\Response|null|void
-     * 
      */
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -119,10 +118,10 @@ class AppController extends Controller
     }
     
     /*
-     * 
      * Defines user rights depending on their type (subscriber, appmanager, vendor, admin)
-     * @param Cake\Auth\user
      * 
+     * @param Cake\Auth\user
+     * @return boolean
      */
     public function isAuthorized($user)
     {
@@ -133,9 +132,13 @@ class AppController extends Controller
         // Default deny access
         return false;
     }
-    
-    //Retrieve offers subscribed by a subscriber and update ownerships
-    public function updateOwnerships($user){
+    /*
+     * Retrieves offers subscribed by a subscriber and update ownerships
+     * 
+     * @return null
+     */
+    public function updateOwnerships(){
+        $user = $this->Auth->user();
         $exists = false;
         //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
@@ -174,10 +177,15 @@ class AppController extends Controller
             }
         }
     }
-    
-    //Retrive devices and applications from user scope 
-    //Note this function should'nt be used
+    /*
+     * Retrive devices and applications from user scope 
+     * Note this function should'nt be used because apps and devices should be provisionned by the appmanager
+     * 
+     * @return null
+     */
     public function retrieveDevicesApplications($user){
+        //getting current user
+        $user = $this->Auth->user();
         //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
         //Importing devices table
@@ -187,6 +195,7 @@ class AppController extends Controller
             'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
         ]);
         $response = $http->get($url);
+        //loop trought results and update
         foreach ($response->json as $elements){
             if(is_array($elements)){
                 if(strpos($elements['id'], 'device') !== false){

@@ -109,7 +109,11 @@ class TransactionsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
-    
+    /*
+     * Defines user rights depending on their type (subscriber, appmanager, vendor, admin)
+     * 
+     * @param Cake\Auth\user
+     */
     public function isAuthorized($user)
     {
         if ($this->request->getParam('action') === 'index') {

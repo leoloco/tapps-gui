@@ -118,7 +118,12 @@ class OwnershipsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
-    
+    /*
+     * Defines user rights depending on their type (subscriber, appmanager, vendor, admin)
+     * 
+     * @param Cake\Auth\user
+     * @return boolean
+     */
     public function isAuthorized($user)
     {
         if ($this->request->getParam('action') === 'index') {
