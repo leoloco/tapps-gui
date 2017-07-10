@@ -47,7 +47,9 @@ class UsersController extends AppController
 
     /**
      * Add method
-     *
+     * Tries to generate a token on the DX-API so the user has to have a TP account
+     * Retrieves the thingpark ID
+     * 
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
@@ -78,7 +80,13 @@ class UsersController extends AppController
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
-
+    
+    /**
+     * Retrieves the thingpark ID of a vendor in an authorized scope
+     * 
+     * @param DX-API token
+     * @return vendor id or 0
+     */
     public function retrieveTpIdVendor($token){
         $url = "https://dx-api.thingpark.com/core/latest/api/vendors";
         $http = new Client([
@@ -99,6 +107,12 @@ class UsersController extends AppController
             return 0;
         }
     }
+    /**
+     * Retrieves the thingpark ID of an app supplier in an authorized scope
+     * 
+     * @param DX-API token
+     * @return vendor id or 0
+     */
     public function retrieveTpIdSupplier($token){
         $url = "https://dx-api.thingpark.com/core/latest/api/suppliers";
         $http = new Client([
@@ -144,7 +158,11 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
     
-    
+    /*
+     * SSO login method. Tries to generate a DX-API token with provided credentials
+     * 
+     * @return \Cake\Http\Response|null Redirects on successful login, renders view otherwise.
+     */
     public function ssoLogin()
     {
         $user = null;
@@ -195,7 +213,12 @@ class UsersController extends AppController
     }
     
     
-    
+    /*
+     * Tries to genrate a token on the DX-API
+     * 
+     * @param email and password
+     * @return DX-API token
+     */
     public function generateToken($email, $pass){
         $http = new Client();
         $url = "https://dx-api.thingpark.com/admin/latest/api/oauth/token?renewToken=false&validityPeriod=infinite";
@@ -232,12 +255,22 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
+    /*
+     * logout from tas
+     */
     public function logout()
     {
         $loggedIn = $this->Auth->user();
         return $this->redirect($this->Auth->logout());
     }
     
+    
+    /*
+     * Defines authorized actions for a non logged in user.
+     * 
+     * @param \Cake\Event\Event $event The beforeFilter event
+     * @return \Cake\Network\Response|null|void
+     */
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->Auth->allow(['logout','add']);
@@ -247,9 +280,14 @@ class UsersController extends AppController
         }
     }
     
+    /*
+     * Defines user rights depending on their type (subscriber, appmanager, vendor, admin)
+     * 
+     * @param user instance
+     * @return boolean
+     */
     public function isAuthorized($user)
     {
-        // Tous les utilisateurs enregistrés peuvent ajouter des articles
         if (in_array($this->request->getParam('action'), ['edit','delete']) && $user['id']===(int)$this->request->getParam('pass.0')) {
             return true;
         }

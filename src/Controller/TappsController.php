@@ -114,4 +114,35 @@ class TappsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function sync(){
+        
+    }
+
+
+    /*
+     * Defines authorized actions for a non logged in user.
+     * 
+     * @param \Cake\Event\Event $event The beforeFilter event
+     * @return \Cake\Network\Response|null|void
+     */   
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['index']);
+        $loggedIn = $this->Auth->user();
+        if($loggedIn){
+            $this->set(compact('loggedIn'));
+        }
+    }
+    
+    
+    /*
+     * Defines user rights depending on their type (subscriber, appmanager, vendor, admin)
+     * 
+     * @param Cake\Auth\user
+     */
+    public function isAuthorized($user)
+    {
+        return parent::isAuthorized($user);
+    }
 }

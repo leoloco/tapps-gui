@@ -12,6 +12,22 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
+/*
+ * To actility developers : 
+ * 
+ * In this document, define controllers that may be called globally.
+ * 
+ * e.g retrieveDevicesApplications($user);
+ * 
+ * When calling those controllers outside of this document specify the path of the controller as follows :
+ * 
+ * AppController::yourGlobalController();
+ * 
+ * 
+ */
+
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
@@ -66,8 +82,8 @@ class AppController extends Controller
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
          */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+        $this->loadComponent('Security');
+        $this->loadComponent('Csrf');
     }
 
     /**
@@ -85,6 +101,12 @@ class AppController extends Controller
         }
     }
     
+    /*
+     * Defines authorized actions for a non logged in user.
+     * 
+     * @param \Cake\Event\Event $event The beforeFilter event
+     * @return \Cake\Network\Response|null|void
+     */
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         //$this->Auth->allow(['logout']);
@@ -95,21 +117,29 @@ class AppController extends Controller
         }
     }
     
-    
-    
+    /*
+     * Defines user rights depending on their type (subscriber, appmanager, vendor, admin)
+     * 
+     * @param Cake\Auth\user
+     * @return boolean
+     */
     public function isAuthorized($user)
     {
-        // Admin peuvent accéder à chaque action
+        // Admin can access any location
         if (isset($user['type']) && $user['type'] === 'admin') {
             return true;
         }
-        // Par défaut refuser
+        // Default deny access
         return false;
     }
-    
-    public function updateOwnerships($user){
+    /*
+     * Retrieves offers subscribed by a subscriber and update ownerships
+     * 
+     * @return null
+     */
+    public function updateOwnerships(){
+        $user = $this->Auth->user();
         $exists = false;
-        
         //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
         //Importing devices table
@@ -123,6 +153,7 @@ class AppController extends Controller
         $query->where(['user_id' => $user['id']]);
         $query->all();
         
+        //Retriving subscribed offers trough DX-API
         $url = "https://dx-api.thingpark.com/core/latest/api/applications";
         $http = new Client([
             'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
@@ -146,7 +177,15 @@ class AppController extends Controller
             }
         }
     }
+    /*
+     * Retrive devices and applications from user scope 
+     * Note this function should'nt be used because apps and devices should be provisionned by the appmanager
+     * 
+     * @return null
+     */
     public function retrieveDevicesApplications($user){
+        //getting current user
+        $user = $this->Auth->user();
         //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
         //Importing devices table
@@ -156,6 +195,7 @@ class AppController extends Controller
             'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
         ]);
         $response = $http->get($url);
+        //loop trought results and update
         foreach ($response->json as $elements){
             if(is_array($elements)){
                 if(strpos($elements['id'], 'device') !== false){
