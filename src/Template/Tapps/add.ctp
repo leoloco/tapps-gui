@@ -8,13 +8,13 @@
     <fieldset>
         <legend><?= __('Add Tapp') ?></legend>
         <?php
-            echo $this->Form->control('tp_id');
+            //echo $this->Form->control('tp_id');
             echo $this->Form->control('name');
             echo $this->Form->control('version_latest');
             echo $this->Form->control('cdn_uri');
             echo $this->Form->control('cdn_login');
-            echo $this->Form->control('cdn_password');
-            echo $this->Form->control('user_id', ['options' => $users]);
+            echo $this->Form->control('cdn_password',['type' => 'password']);
+            //echo $this->Form->control('user_id', ['options' => $users]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

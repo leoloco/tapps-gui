@@ -37,11 +37,6 @@ class TappsTable extends Table
         $this->setTable('tapps');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
-
-        $this->belongsTo('Tps', [
-            'foreignKey' => 'tp_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
@@ -95,7 +90,6 @@ class TappsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['tp_id'], 'Tps'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;

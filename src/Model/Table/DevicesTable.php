@@ -36,11 +36,6 @@ class DevicesTable extends Table
         $this->setTable('devices');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
-
-        $this->belongsTo('Tps', [
-            'foreignKey' => 'tp_id',
-            'joinType' => 'INNER'
-        ]);
         $this->hasMany('Ownerships', [
             'foreignKey' => 'device_id'
         ]);
@@ -79,7 +74,6 @@ class DevicesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['tp_id'], 'Tps'));
 
         return $rules;
     }
