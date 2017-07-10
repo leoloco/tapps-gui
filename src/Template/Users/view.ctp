@@ -3,10 +3,26 @@
   * @var \App\View\AppView $this
   */
 ?>
-
-<div class="users view large-12 medium-12 columns content">
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id]) ?> </li>
+        <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
+        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Ownerships'), ['controller' => 'Ownerships', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Ownership'), ['controller' => 'Ownerships', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Tapps'), ['controller' => 'Tapps', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Tapp'), ['controller' => 'Tapps', 'action' => 'add']) ?> </li>
+    </ul>
+</nav>
+<div class="users view large-9 medium-8 columns content">
     <h3><?= h($user->name) ?></h3>
     <table class="vertical-table">
+        <tr>
+            <th scope="row"><?= __('Tpid') ?></th>
+            <td><?= h($user->tpid) ?></td>
+        </tr>
         <tr>
             <th scope="row"><?= __('Username') ?></th>
             <td><?= h($user->username) ?></td>
@@ -36,6 +52,10 @@
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
     </table>
+    <div class="row">
+        <h4><?= __('API KEY') ?></h4>
+        <?= $this->Text->autoParagraph(h($user->API_KEY)); ?>
+    </div>
     <div class="related">
         <h4><?= __('Related Ownerships') ?></h4>
         <?php if (!empty($user->ownerships)): ?>
@@ -77,6 +97,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Tpid') ?></th>
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Version Latest') ?></th>
                 <th scope="col"><?= __('Cdn Uri') ?></th>
@@ -88,6 +109,7 @@
             <?php foreach ($user->tapps as $tapps): ?>
             <tr>
                 <td><?= h($tapps->id) ?></td>
+                <td><?= h($tapps->tpid) ?></td>
                 <td><?= h($tapps->name) ?></td>
                 <td><?= h($tapps->version_latest) ?></td>
                 <td><?= h($tapps->cdn_uri) ?></td>
