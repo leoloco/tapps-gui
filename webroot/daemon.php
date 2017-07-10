@@ -1,6 +1,5 @@
 <?php
 
-include('define.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
