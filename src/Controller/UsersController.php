@@ -63,10 +63,10 @@ class UsersController extends AppController
             if(isset($response->json['access_token'])){
                 $user->API_KEY = $response->json['access_token'];
                 if($request['type']==='vendor'){
-                    $user->tp_id = $this->retrieveTpIdVendor($response->json['access_token']);
+                    $user->tpid = $this->retrieveTpIdVendor($response->json['access_token']);
                 }
                 if($request['type']==='appmanager'){
-                    $user->tp_id = $this->retrieveTpIdSupplier($response->json['access_token']);
+                    $user->tpid = $this->retrieveTpIdSupplier($response->json['access_token']);
                 }
                 if ($this->Users->save($user)) {
                     $this->Flash->success(__('The user has been saved.'));

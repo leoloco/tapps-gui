@@ -5,7 +5,7 @@ USE tapps_db;
 DROP TABLE IF EXISTS tapps;
 CREATE TABLE tapps (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  tp_id varchar(255) NOT NULL,
+  tpid varchar(255) NOT NULL,
   name varchar(255) NOT NULL,
   version_latest varchar(255) NOT NULL DEFAULT '0',
   cdn_uri varchar(255) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE tapps (
 DROP TABLE IF EXISTS devices;
 CREATE TABLE devices (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  tp_id varchar(255) NOT NULL,
+  tpid varchar(255) NOT NULL,
   name varchar(255) NOT NULL,
   creation_date datetime NOT NULL
 );
@@ -45,7 +45,7 @@ CREATE TABLE transactions (
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  tp_id varchar(255) NOT NULL,
+  tpid varchar(255) NOT NULL,
   username varchar(255) NOT NULL,
   name varchar(255) NOT NULL,
   email varchar(255) NOT NULL,

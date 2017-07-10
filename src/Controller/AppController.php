@@ -199,11 +199,11 @@ class AppController extends Controller
         foreach ($response->json as $elements){
             if(is_array($elements)){
                 if(strpos($elements['id'], 'device') !== false){
-                    if($devices->find()->where(['tp_id' => $elements['id']])->isEmpty()){
+                    if($devices->find()->where(['tpid' => $elements['id']])->isEmpty()){
                         $queryDevices=$devices->query();
-                        $queryDevices->insert(['tp_id','name','creation_date'])
+                        $queryDevices->insert(['tpid','name','creation_date'])
                                 ->values([
-                                    'tp_id' => $elements['id'],
+                                    'tpid' => $elements['id'],
                                     'name' => $elements['name'],
                                     'creation_date' => Time::now(),
                                 ])
@@ -211,12 +211,12 @@ class AppController extends Controller
                     }
 
                 }  elseif (strpos($elements['id'], 'application') !== false) {
-                    if($tapps->find()->where(['tp_id' => $elements['id']])->isEmpty())
+                    if($tapps->find()->where(['tpid' => $elements['id']])->isEmpty())
                     {
                         $queryTapps = $tapps->query();
-                        $queryTapps->insert(['tp_id','name','cdn_uri','cdn_login','cdn_password','user_id'])
+                        $queryTapps->insert(['tpid','name','cdn_uri','cdn_login','cdn_password','user_id'])
                                 ->values([
-                                    'tp_id' => $elements['id'],
+                                    'tpid' => $elements['id'],
                                     'name' => $elements['name'],
                                     'cdn_uri' => '0',
                                     'cdn_login' => '0',
