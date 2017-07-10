@@ -59,7 +59,7 @@ class TappsController extends AppController
         $tapp = $this->Tapps->newEntity();
         if ($this->request->is('post')) {
             $tapp = $this->Tapps->patchEntity($tapp, $this->request->getData());
-            $tapp->user_id= $user->id;
+            $tapp->user_id= $user['id'];
             if ($this->Tapps->save($tapp)) {
                 $this->Flash->success(__('The tapp has been saved.'));
 
