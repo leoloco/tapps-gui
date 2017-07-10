@@ -3,8 +3,19 @@
   * @var \App\View\AppView $this
   */
 ?>
-
-<div class="ownerships index large-12 medium-12 columns content">
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('New Ownership'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Devices'), ['controller' => 'Devices', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Device'), ['controller' => 'Devices', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Tapps'), ['controller' => 'Tapps', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Tapp'), ['controller' => 'Tapps', 'action' => 'add']) ?></li>
+    </ul>
+</nav>
+<div class="ownerships index large-9 medium-8 columns content">
     <h3><?= __('Ownerships') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>

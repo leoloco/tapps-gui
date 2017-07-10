@@ -3,13 +3,21 @@
   * @var \App\View\AppView $this
   */
 ?>
-<div class="devices index large-12 medium-12 columns content">
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('New Device'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Ownerships'), ['controller' => 'Ownerships', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Ownership'), ['controller' => 'Ownerships', 'action' => 'add']) ?></li>
+    </ul>
+</nav>
+<div class="devices index large-9 medium-8 columns content">
     <h3><?= __('Devices') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('tp_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('tpid') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('creation_date') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -19,7 +27,7 @@
             <?php foreach ($devices as $device): ?>
             <tr>
                 <td><?= $this->Number->format($device->id) ?></td>
-                <td><?= h($device->tp_id) ?></td>
+                <td><?= h($device->tpid) ?></td>
                 <td><?= h($device->name) ?></td>
                 <td><?= h($device->creation_date) ?></td>
                 <td class="actions">
