@@ -8,7 +8,7 @@
     <fieldset>
         <legend><?= __('Add Tapp') ?></legend>
         <?php
-            echo $this->Form->control('tpid',['label','ThingPark ID has to be identical to the one on ThingPark']);
+            echo $this->Form->control('tpid', ['label'=>'ThingPark ID has to be identical to the one on ThingPark']);
             echo $this->Form->control('name');
             echo $this->Form->control('version_latest');
             echo $this->Form->control('cdn_uri');
