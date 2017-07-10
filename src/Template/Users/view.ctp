@@ -24,10 +24,6 @@
             <td><?= h($user->email) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Password') ?></th>
-            <td><?= h($user->password) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Org') ?></th>
             <td><?= h($user->org) ?></td>
         </tr>
@@ -40,10 +36,6 @@
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
     </table>
-    <div class="row">
-        <h4><?= __('API KEY') ?></h4>
-        <?= $this->Text->autoParagraph(h($user->API_KEY)); ?>
-    </div>
     <div class="related">
         <h4><?= __('Related Ownerships') ?></h4>
         <?php if (!empty($user->ownerships)): ?>
