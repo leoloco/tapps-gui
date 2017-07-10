@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Tapps Controller
@@ -128,7 +129,7 @@ class TappsController extends AppController
      */   
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow();
+        $this->Auth->allow(['index']);
         $loggedIn = $this->Auth->user();
         if($loggedIn){
             $this->set(compact('loggedIn'));
