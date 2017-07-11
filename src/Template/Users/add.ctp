@@ -14,13 +14,9 @@
             echo $this->Form->control('email');
             echo $this->Form->control('password');
             echo $this->Form->control('org');
-            echo "<div class='input text required'><label>Type</label></div>";
-            echo $this->Form->select(
-                'type',
-                ['vendor','appmanager'],
-                ['empty' => '(choose one)']
-            );
-            echo $this->Form->control('type'); 
+            $options = ['appmanager' => 'appmanager','subscriber' => 'subscriber','vendor' => 'vendor']; 
+            echo "<div class='input text required'><label>Type</label></div>"; 
+            echo $this->Form->select('type', $options, ['empty' => true]); 
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
