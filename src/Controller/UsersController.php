@@ -64,13 +64,17 @@ class UsersController extends AppController
                 $user->API_KEY = $response->json['access_token'];
                 if($request['type']==='vendor'){
                     $user->tpid = $this->retrieveTpIdVendor($response->json['access_token']);
+                    if ($this->Users->save($user)) {
+                        $this->Flash->success(__('The user has been saved.'));
+                        return $this->redirect(['action' => 'index']);
+                    }
                 }
                 if($request['type']==='appmanager'){
                     $user->tpid = $this->retrieveTpIdSupplier($response->json['access_token']);
-                }
-                if ($this->Users->save($user)) {
-                    $this->Flash->success(__('The user has been saved.'));
-                    return $this->redirect(['action' => 'index']);
+                    if ($this->Users->save($user)) {
+                        $this->Flash->success(__('The user has been saved.'));
+                        return $this->redirect(['action' => 'index']);
+                    }
                 }
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }else{

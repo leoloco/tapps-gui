@@ -20,6 +20,7 @@
                 ['vendor','appmanager'],
                 ['empty' => '(choose one)']
             );
+            echo $this->Form->control('type'); 
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
