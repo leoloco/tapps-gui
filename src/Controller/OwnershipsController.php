@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Ownerships Controller
@@ -127,13 +128,24 @@ class OwnershipsController extends AppController
      */
     public function isAuthorized($user)
     {
-        if (in_array($this->request->getParam('action'), ['view','index','add','edit','delete']) && $user['type']==='vendor') {
+        if (in_array($this->request->getParam('action'), ['view','index','add','edit']) && $user['type']==='vendor') {
             return true;
         }
-        if (in_array($this->request->getParam('action'), ['view','index','add','edit','delete']) && $user['type']==='subscriber') {
-            if( $user['tapp_id'] === $this->request->getParam('user_id')){
+        if (in_array($this->request->getParam('action'), ['index']) && $user['type']==='subscriber') {
                 return true;
-            }
+        }
+        //The edit and delete actions are only allowed if the app is owned by the current appmanager
+        //Importing tapps table
+        $ownerships = TableRegistry::get('Ownerships');
+        //Querying all tapps
+        $query = $ownerships->find();
+        //Geting only the tapp the user just tried to edit
+        $query->where(['Ownerships.id' => (int)$this->request->getParam('pass.0')]);
+        //Selecting the id of the owner
+        $query->select('user_id');
+        //If the owner id is the same as current user, authorize editing or deletion
+        if (in_array($this->request->getParam('action'), ['view','edit','delete']) && $user['type']==='subscriber' && $user['id']===$query->first()['user_id']){
+            return true;
         }
         return parent::isAuthorized($user);
     }
