@@ -161,9 +161,7 @@ class TappsController extends AppController
         $query = $tapps->find();
         $query->where(['Tapps.id' => (int)$this->request->getParam('pass.0')]);
         $query->select('user_id');
-        $user_id = $query->first()['user_id'];
-        $this->Flash->error($user_id);
-        if (in_array($this->request->getParam('action'), ['edit','delete']) && $user['type']==='appmanager' && $user['id']===(int)$this->request->getParam('user_id')){
+        if (in_array($this->request->getParam('action'), ['edit','delete']) && $user['type']==='appmanager' && $user['id']===$query->first()['user_id']){
             return true;
         }
         return parent::isAuthorized($user);
