@@ -292,7 +292,7 @@ class UsersController extends AppController
      */
     public function isAuthorized($user)
     {
-        if (in_array($this->request->getParam('action'), ['edit','delete']) && $user['id']===(int)$this->request->getParam('pass.0')) {
+        if (in_array($this->request->getParam('action'), ['view','edit','delete']) && $user['id']===(int)$this->request->getParam('pass.0')) {
             return true;
         }
         if ($this->request->getParam('action') === 'index') {
