@@ -152,6 +152,9 @@ class TappsController extends AppController
         if ($this->request->getParam('action') === 'add' && $user['type']==='appmanager'){
             return true;
         }
+        if ($this->request->getParam('action') === 'view' && $user['type']==='appmanager'){
+            return true;
+        }
         if (in_array($this->request->getParam('action'), ['edit','delete']) && $user['type']==='appmanager' && $user['id']===(int)$this->request->getParam('user_id')){
             return true;
         }
