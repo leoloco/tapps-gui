@@ -131,7 +131,7 @@ class TappsController extends AppController
      */   
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['index']);
+        $this->Auth->deny();
         $loggedIn = $this->Auth->user();
         if($loggedIn){
             $this->set(compact('loggedIn'));
@@ -146,6 +146,15 @@ class TappsController extends AppController
      */
     public function isAuthorized($user)
     {
+        if ($this->request->getParam('action') === 'index' && $user['type']==='appmanager'){
+            return true;
+        }
+        if ($this->request->getParam('action') === 'add' && $user['type']==='appmanager'){
+            return true;
+        }
+        if (in_array($this->request->getParam('action'), ['edit','delete']) && $user['type']==='appmanager' && $user['id']===(int)$this->request->getParam('user_id')){
+            return true;
+        }
         return parent::isAuthorized($user);
     }
 }
