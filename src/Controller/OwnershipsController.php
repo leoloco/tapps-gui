@@ -127,10 +127,10 @@ class OwnershipsController extends AppController
      */
     public function isAuthorized($user)
     {
-        if (in_array($this->request->getParam('action'), ['add','edit','delete']) && $user['type']==='vendor') {
+        if (in_array($this->request->getParam('action'), ['view','index','add','edit','delete']) && $user['type']==='vendor') {
             return true;
         }
-        if ($this->request->getParam('action') === 'edit' && $user['type']==='subscriber') {
+        if (in_array($this->request->getParam('action'), ['view','index','add','edit','delete']) && $user['type']==='subscriber') {
             if( $user['tapp_id'] === $this->request->getParam('user_id')){
                 return true;
             }

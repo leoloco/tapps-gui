@@ -147,20 +147,20 @@ class TappsController extends AppController
      */
     public function isAuthorized($user)
     {
-        if ($this->request->getParam('action') === 'index' && $user['type']==='appmanager'){
+        //Index, view and tapp provisionning authorized to all managers
+        if (in_array($this->request->getParam('action'), ['index','add','view']) && $user['type']==='appmanager'){
             return true;
         }
-        if ($this->request->getParam('action') === 'add' && $user['type']==='appmanager'){
-            return true;
-        }
-        if ($this->request->getParam('action') === 'view' && $user['type']==='appmanager'){
-            return true;
-        }
-        
+        //The edit and delete actions are only allowed if the app is owned by the current appmanager
+        //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
+        //Querying all tapps
         $query = $tapps->find();
+        //Geting only the tapp the user just tried to edit
         $query->where(['Tapps.id' => (int)$this->request->getParam('pass.0')]);
+        //Selecting the id of the owner
         $query->select('user_id');
+        //If the owner id is the same as current user, authorize editing or deletion
         if (in_array($this->request->getParam('action'), ['edit','delete']) && $user['type']==='appmanager' && $user['id']===$query->first()['user_id']){
             return true;
         }
