@@ -71,7 +71,7 @@ class OwnershipsController extends AppController
         }
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
         if($this->Auth->user()['type']==='subscriber'){
-            $users = $this->Auth->user();
+            $users = $this->Auth->user()['username'];
         }else{
             $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
         }
@@ -105,7 +105,7 @@ class OwnershipsController extends AppController
         }
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
         if($this->Auth->user()['type']==='subscriber'){
-            $users = $this->Auth->user();
+            $users = $this->Auth->user()['username'];
         }else{
             $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
         }
