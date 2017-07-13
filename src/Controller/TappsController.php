@@ -118,9 +118,44 @@ class TappsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-    
+    /*
+     * @app.route('/sync/')
+def device_sync(db):
+    """
+    1. GET http://dedi.boulsh.net/sync?id=xxxx
+    RET: 0 = 'up to date'
+         1 = 'sync'
+    2. GET http://dedi.boulsh.net/sync?id=xxxx&applist=app-01,app-02
+    RET: json
+    3. GET http://dedi.boulsh.net/sync?id=xxxx&update=0
+    RET: 0 = 'up to date'
+         1 = 'sync'
+    """
+    try:
+        dev_id = request.query.id
+    except:
+        return('Device id missing')
+    try:
+        app_list = request.query.applist
+    except:
+        app_list = ""
+    dev_status = check_update(db, dev_id)
+    print ("dev_status: %s" %  dev_status)
+    if dev_status < 0:
+        return ('unknown device')
+    # request for synchronisation
+    if app_list == "":
+        if dev_status == 1:
+            return ('1') # sync
+        else:
+            return ('0') # up to date
+    # performing synchronization
+    return (gen_sync_app_list(db, dev_id, app_list.split(',')))
+     */
     public function sync(){
-        
+        if ($this->request->is(['get'])){
+            $this->Flash->error($this->request->getParam('pass.0'));
+        }
     }
 
 
@@ -135,7 +170,7 @@ class TappsController extends AppController
         $this->Auth->deny();
         $loggedIn = $this->Auth->user();
         if($loggedIn){
-            $this->set(compact('loggedIn'));
+            $this->set(compact('loggedIn','sync'));
         }
     }
     
