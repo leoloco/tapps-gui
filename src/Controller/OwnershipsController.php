@@ -56,6 +56,7 @@ class OwnershipsController extends AppController
      */
     public function add()
     {
+        $user = $this->Auth->user();
         $ownership = $this->Ownerships->newEntity();
         if ($this->request->is('post')) {
             $ownership = $this->Ownerships->patchEntity($ownership, $this->request->getData());
@@ -72,7 +73,7 @@ class OwnershipsController extends AppController
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
         $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
         $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
-        $this->set(compact('ownership', 'devices', 'users', 'tapps'));
+        $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
         $this->set('_serialize', ['ownership']);
     }
 
@@ -85,6 +86,7 @@ class OwnershipsController extends AppController
      */
     public function edit($id = null)
     {
+        $user = $this->Auth->user();
         $ownership = $this->Ownerships->get($id, [
             'contain' => []
         ]);
@@ -105,7 +107,7 @@ class OwnershipsController extends AppController
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
         $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
         $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
-        $this->set(compact('ownership', 'devices', 'users', 'tapps'));
+        $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
         $this->set('_serialize', ['ownership']);
     }
 
