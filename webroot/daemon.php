@@ -3,7 +3,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
-        $myfile = fopen("/log.txt", "a") or die("Unable to open file!");
+        $myfile = fopen("log.txt", "a") or die("Unable to open file!");
         file_put_contents("xmlarray.txt",print_r($xmlArray,true));
 	switch (array_keys($xmlArray)[0])
         {
@@ -125,6 +125,8 @@ def device_sync(db):
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         http_response_code(200);
 	echo "This server interacts with the ThingPark API";
+        echo "\n id requested is : ";
+        echo $_GET['id'];
 }
 
 
