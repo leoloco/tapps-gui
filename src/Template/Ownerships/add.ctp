@@ -9,10 +9,10 @@
         <legend><?= __('Add Ownership') ?></legend>
         <?php
             echo $this->Form->control('device_id', ['options' => $devices]);
-            echo $this->Form->control('user_id', ['options' => $users]);
+            if($this->Auth->user()['type']==='vendor'){
+                echo $this->Form->control('user_id', ['options' => $users]);
+            }
             echo $this->Form->control('tapp_id', ['options' => $tapps]);
-            //echo $this->Form->control('creation_date', ['empty' => true]);
-            //echo $this->Form->control('modified_date', ['empty' => true]);
             echo $this->Form->control('href');
             echo $this->Form->control('activation');
         ?>

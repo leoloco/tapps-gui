@@ -70,11 +70,7 @@ class OwnershipsController extends AppController
             $this->Flash->error(__('The ownership could not be saved. Please, try again.'));
         }
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
-        if($this->Auth->user()['type']==='subscriber'){
-            $users = $this->Auth->user()['username'];
-        }else{
-            $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
-        }
+        $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
         $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
         $this->set(compact('ownership', 'devices', 'users', 'tapps'));
         $this->set('_serialize', ['ownership']);
@@ -95,6 +91,9 @@ class OwnershipsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $ownership = $this->Ownerships->patchEntity($ownership, $this->request->getData());
             $ownership->modified_date = Time::now();
+            if($this->Auth->user()['type']==='subscriber'){
+                $ownership->user_id = $this->Auth->user()['id'];
+            }
             if ($this->Ownerships->save($ownership)) {
                 
                 $this->Flash->success(__('The ownership has been saved.'));
@@ -104,11 +103,7 @@ class OwnershipsController extends AppController
             $this->Flash->error(__('The ownership could not be saved. Please, try again.'));
         }
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
-        if($this->Auth->user()['type']==='subscriber'){
-            $users = $this->Auth->user()['username'];
-        }else{
-            $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
-        }
+        $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
         $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
         $this->set(compact('ownership', 'devices', 'users', 'tapps'));
         $this->set('_serialize', ['ownership']);
