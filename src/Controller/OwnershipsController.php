@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 
 /**
  * Ownerships Controller
@@ -58,7 +59,10 @@ class OwnershipsController extends AppController
         $ownership = $this->Ownerships->newEntity();
         if ($this->request->is('post')) {
             $ownership = $this->Ownerships->patchEntity($ownership, $this->request->getData());
+            $ownership->creation_date = Time::now();
+            $ownership->modified_date = Time::now();
             if ($this->Ownerships->save($ownership)) {
+                
                 $this->Flash->success(__('The ownership has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -66,7 +70,11 @@ class OwnershipsController extends AppController
             $this->Flash->error(__('The ownership could not be saved. Please, try again.'));
         }
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
-        $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
+        if($this->Auth->user()['type']==='subscriber'){
+            $users = $this->Auth->user();
+        }else{
+            $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
+        }
         $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
         $this->set(compact('ownership', 'devices', 'users', 'tapps'));
         $this->set('_serialize', ['ownership']);
