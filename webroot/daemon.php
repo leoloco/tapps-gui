@@ -3,7 +3,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
-        $myfile = fopen("log.txt", "a") or die("Unable to open file!");
+        $myfile = fopen("~/Documents/log.txt", "a") or die("Unable to open file!");
         file_put_contents("xmlarray.txt",print_r($xmlArray,true));
 	switch (array_keys($xmlArray)[0])
         {
@@ -84,6 +84,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         fclose($myfile);
 }
+
+
+    /*
+     * @app.route('/sync/')
+def device_sync(db):
+    """
+    1. GET http://dedi.boulsh.net/sync?id=xxxx
+    RET: 0 = 'up to date'
+         1 = 'sync'
+    2. GET http://dedi.boulsh.net/sync?id=xxxx&applist=app-01,app-02
+    RET: json
+    3. GET http://dedi.boulsh.net/sync?id=xxxx&update=0
+    RET: 0 = 'up to date'
+         1 = 'sync'
+    """
+    try:
+        dev_id = request.query.id
+    except:
+        return('Device id missing')
+    try:
+        app_list = request.query.applist
+    except:
+        app_list = ""
+    dev_status = check_update(db, dev_id)
+    print ("dev_status: %s" %  dev_status)
+    if dev_status < 0:
+        return ('unknown device')
+    # request for synchronisation
+    if app_list == "":
+        if dev_status == 1:
+            return ('1') # sync
+        else:
+            return ('0') # up to date
+    # performing synchronization
+    return (gen_sync_app_list(db, dev_id, app_list.split(',')))
+     */
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
