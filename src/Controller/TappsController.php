@@ -156,6 +156,14 @@ def device_sync(db):
         if ($this->request->is(['get'])){
             $this->Flash->error($this->request->getParam('pass.0'));
         }
+        $this->paginate = [
+            'contain' => ['Users']
+        ];
+        $tapps = $this->paginate($this->Tapps);
+
+        $this->set(compact('tapps'));
+        $this->set('_serialize', ['tapps']);
+        
     }
 
 
