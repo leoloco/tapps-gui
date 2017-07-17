@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             }else{
                 $local_app_list = $results->fetch_array();
                 $results->free();
-                echo print_r($local_app_list);
+                echo print_r($local_app_list[1]);
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
                     //Getting the app tpid
