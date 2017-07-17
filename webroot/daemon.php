@@ -150,13 +150,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $local_app_list = $results->fetch_array();
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
+                    echo "<br>app id : ".$app_id;
                     //Getting the app tpid
                     $sql = "SELECT tpid FROM tapps WHERE id = $app_id";
                     $results = $mysqli->query($sql);
                     $app_tpid = $results->fetch_array();
                     array_push($stack,$app_tpid[0]);
                 }
-                echo print_r($stack);
                 foreach ($stack as $app){
                     if(!in_array($app, $app_list)){
                         echo "<br>update needed";
