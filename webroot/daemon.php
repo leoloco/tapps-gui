@@ -124,10 +124,10 @@ def device_sync(db):
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     http_response_code(200);
-    $apps_count=0;
+    $stack = array();
     if(!empty($_GET["id"])){
         //Getting device id
-        $dev_id = filter_input(INPUT_GET, 'id');
+        $device_id = filter_input(INPUT_GET, 'id');
         //Geting app list
         if(isset($_GET["applist"])){
             //Separating apps
@@ -140,33 +140,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             else{
                     echo "<br>MySQL connection has been properly opened";
             }
-            //Selecting app id's of the given device
-            $sql = "SELECT tapp_id FROM ownerships WHERE device_id = $dev_id";
+            //Selecting app id's of the given device on the TAS
+            $sql = "SELECT tapp_id FROM ownerships WHERE device_id = $device_id";
             $results = $mysqli->query($sql);
             //If the device is not found
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
-                $device_tapps = $results->fetch_array();
+                $local_app_list = $results->fetch_array();
                 //For each app owned by the device on the tas
-                foreach($device_tapps as $device_tapp_id){
+                foreach($local_app_list as $app_id){
                     //Getting the app tpid
-                    $sql = "SELECT tpid FROM tapps WHERE id = $device_tapp_id";
+                    $sql = "SELECT tpid FROM tapps WHERE id = $app_id";
                     $results = $mysqli->query($sql);
-                    $remote_tapp_tpid = $results->fetch_array();
-                    //For each app owned by the device itself
-                    foreach($app_list as $apps){
-                        //Checking if owned apps are installed
-                        if($apps===$remote_tapp_tpid[0]){
-                            $apps_count = $apps_count + 1;
-                        }
-                    }
-                    if($apps_count === count($app_list)){
-                        echo "<br>Device up to date";
-                    }
-                    else{
-                        echo "<br>Need update";
-                    }
+                    $app_tpid = $results->fetch_array();
+                    array_push($stack,$app_tpid[0]);
+                }
+                if(count($tapp_list)===count($stack)){
+                    echo "<br> device up to date";
+                }elseif (count($stack)> count($tapp_list)) {
+                    echo"<br> Need update";
+                }else{
+                    echo "<br> Applist furnished bigger than what is possible";
                 }
             }    
         }
