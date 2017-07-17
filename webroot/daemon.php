@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 echo "unknown device";
             }else{
                 $local_app_list = $results->fetch_array(MYSQLI_NUM);
-                $result->free();
+                $results->free();
                 echo "<br> results : ".print_r($results);
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $sql = "SELECT tpid FROM tapps WHERE id = $app_id";
                     $results = $mysqli->query($sql);
                     $app_tpid = $results->fetch_array();
-                    $result->free();
+                    $results->free();
                     array_push($stack,$app_tpid[0]);
                 }
                 foreach ($stack as $app){
