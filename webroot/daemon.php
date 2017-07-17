@@ -154,6 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $remote_tapp_tpid = $results->fetch_array();
                     echo "<br> results lenght : ".count($remote_tapp_tpid);
                     echo "<br> results 1 : ".$remote_tapp_tpid[0];
+                    echo "<br> results 2 : ".$remote_tapp_tpid[1];
                     foreach($app_list as $apps){
                         
                     }
