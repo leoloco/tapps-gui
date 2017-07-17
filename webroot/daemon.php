@@ -161,9 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }elseif (count($stack)> count($app_list)) {
                     echo"<br>Need update";
                     echo "<br>applist lenght : ".count($app_list);
-                    echo "<br> stack".print_r($app_list);
+                    echo "<br> applist : ".print_r($app_list);
                     echo "<br>stack lenght : ".count($stack);
-                    echo "<br> stack".print_r($stack);
+                    echo "<br> stack :".print_r($stack);
                 }else{
                     echo "<br> Applist furnished bigger than what is possible";
                 }
