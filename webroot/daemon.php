@@ -124,6 +124,7 @@ def device_sync(db):
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     http_response_code(200);
+    $apps_count=0;
     if(!empty($_GET["id"])){
         //Getting device id
         $dev_id = filter_input(INPUT_GET, 'id');
@@ -131,7 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if(isset($_GET["applist"])){
             //Separating apps
             $app_list = explode(",", filter_input(INPUT_GET, 'applist'));
-            echo "<br>". $app_list[0];
             //Connecting to db
             $mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
             if ($mysqli->connect_errno) {
@@ -148,15 +148,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 echo "unknown device";
             }else{
                 $device_tapps = $results->fetch_array();
+                //For each app owned by the device on the tas
                 foreach($device_tapps as $device_tapp_id){
+                    //Getting the app tpid
                     $sql = "SELECT tpid FROM tapps WHERE id = $device_tapp_id";
                     $results = $mysqli->query($sql);
                     $remote_tapp_tpid = $results->fetch_array();
-                    echo "<br> results lenght : ".count($remote_tapp_tpid);
-                    echo "<br> results 1 : ".$remote_tapp_tpid[0];
-                    echo "<br> results 2 : ".$remote_tapp_tpid[1];
+                    //For each app owned by the device itself
                     foreach($app_list as $apps){
-                        
+                        //Checking if owned apps are installed
+                        if($apps===$remote_tapp_tpid[0]){
+                            $apps_count = $apps_count + 1;
+                        }
+                    }
+                    if($apps_count === count($app_list)){
+                        echo "<br>Device up to date";
+                    }
+                    else{
+                        echo "<br>Need update";
                     }
                 }
             }    
