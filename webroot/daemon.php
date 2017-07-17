@@ -152,8 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 foreach($device_tapps as $device_tapp_id){
                     $sql = "SELECT tpid FROM tapps WHERE id = $device_tapp_id";
                     $results = $mysqli->query($sql);
-                    echo "<br> sql : ".$sql;
-                    echo "<br> results : ".print_r($results);
+                    $remote_tapp_tpid = $results->fetch_array();
+                    echo "<br> results : ".print_r($remote_tapp_tpid);
                     foreach($app_list as $apps){
                         
                     }
