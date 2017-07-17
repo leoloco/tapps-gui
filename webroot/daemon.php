@@ -151,6 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 //For each app owned by the device on the tas
                 echo "<br> number of rows = ".$results->num_rows;
                 echo "<br> number of cells : ".count($local_app_list);
+                echo "cell 0 : ".$local_app_list[0];
+                echo "cell 1 : ".$local_app_list[1];
                 foreach($local_app_list as $app_id){
                     //Getting the app tpid
                     $sql = "SELECT tpid FROM tapps WHERE id = $app_id";
