@@ -126,10 +126,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         http_response_code(200);
         if(!empty($_GET["id"])){
             $dev_id = filter_input(INPUT_GET, 'id');
-            echo "\nid : ".$dev_id;
+            echo "\n id : ".$dev_id;
             if(isset($_GET["applist"])){
-                $app_list = filter_input(INPUT_GET, 'applist');
-                echo "\napp list : ".$app_list;
+                $app_list = explode(",", filter_input(INPUT_GET, 'applist'));
+                echo "\n app list 0 : ".$app_list[0];
+                echo "\n app list 1 : ".$app_list[1];
                 //It is asking for sync
             }else{
             }
