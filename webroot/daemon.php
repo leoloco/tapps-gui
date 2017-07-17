@@ -156,8 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $app_tpid = $results->fetch_array();
                     array_push($stack,$app_tpid[0]);
                 }
+                echo print_r($stack);
                 foreach ($stack as $app){
-                    echo "<br>app : ".$app;
                     if(!in_array($app, $app_list)){
                         echo "<br>update needed";
                         $data = [ 'id' => $app];
