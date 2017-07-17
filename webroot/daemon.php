@@ -123,28 +123,46 @@ def device_sync(db):
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        http_response_code(200);
-        if(!empty($_GET["id"])){
-            $dev_id = filter_input(INPUT_GET, 'id');
-            echo "\n id : ".$dev_id;
+    http_response_code(200);
+    if(!empty($_GET["id"])){
+        //Getting device id
+        $dev_id = filter_input(INPUT_GET, 'id');
+        echo "\n id : ".$dev_id;
+        //Geting app list
+        if(isset($_GET["applist"])){
+            //Separating apps
+            $app_list = explode(",", filter_input(INPUT_GET, 'applist'));
+            //Connecting to db
             $mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
             if ($mysqli->connect_errno) {
-                    echo "\nSorry, this website is experiencing problems. \n";
+                    echo "<br>Sorry, this website is experiencing problems";
             }
             else{
-                    echo "\nMySQL connection has been properly opened \n";
+                    echo "<br>MySQL connection has been properly opened";
             }
+            //Selecting app id's of the given device
             $sql = "SELECT tapp_id FROM ownerships WHERE device_id = $dev_id";
             $results = $mysqli->query($sql);
-            if(isset($_GET["applist"])){
-                $app_list = explode(",", filter_input(INPUT_GET, 'applist'));
-                if($results->num_rows===count($app_list)){
-                    
-                }
+            //If the device is not found
+            if($results->num_rows===0){
+                echo "unknown device";
             }else{
-            }
+                $device_tapps = $results->fetch_array();
+                foreach($device_tapps as $device_tapp_id){
+                    $sql = "SELECT tpid FROM tapps WHERE id = $device_tapp_id";
+                    $results = $mysqli->query($sql);
+                    echo "<br> sql : ".$sql;
+                    echo "<br> result : ".$results;
+                    foreach($app_list as $apps){
+                        
+                    }
+                }
+            }    
         }
+        
+    }        
 }
+
 
 
 function xml2array($url, $get_attributes = 1, $priority = 'tag')
