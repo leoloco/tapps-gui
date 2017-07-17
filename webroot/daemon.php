@@ -157,11 +157,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     array_push($stack,$app_tpid[0]);
                 }
                 foreach ($stack as $app){
+                    echo "<br>app : ".$app;
                     if(!in_array($app, $app_list)){
                         echo "<br>update needed";
                         $data = [ 'id' => $app];
                         header('Content-type: application/json');
-                        echo json_encode( $data );
+                        echo json_encode($data);
                     }else{
                         echo "<br>up to date";
                     }
