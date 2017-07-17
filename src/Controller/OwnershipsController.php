@@ -73,6 +73,7 @@ class OwnershipsController extends AppController
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
         $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
         $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
+        $tapps->select('version_latest');
         $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
         $this->set('_serialize', ['ownership']);
     }
@@ -107,6 +108,7 @@ class OwnershipsController extends AppController
         $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
         $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
         $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
+        $tapps->select('version_latest');
         $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
         $this->set('_serialize', ['ownership']);
     }

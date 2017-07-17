@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         	$email = $jsonArray[0]['contactEmail'];
                                         	//Push subsriber data into DB
                                         	if(isset($jsonArray[0]['contactEmail'])){
-							$sql = "SELECT * FROM users WHERE tp_id = $ID";
+							$sql = "SELECT * FROM users WHERE tpid = $ID";
                                 			$results = $mysqli->query($sql);
                                 			//Check if user exsist
                                 			if($results->num_rows===0){
@@ -127,11 +127,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if(!empty($_GET["id"])){
             $dev_id = filter_input(INPUT_GET, 'id');
             echo "\n id : ".$dev_id;
+            $mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
+            if ($mysqli->connect_errno) {
+                    echo "\nSorry, this website is experiencing problems. \n";
+            }
+            else{
+                    echo "\nMySQL connection has been properly opened \n";
+            }
+            $sql = "SELECT tapp_id FROM ownerships WHERE device_id = $dev_id";
+            $results = $mysqli->query($sql);
             if(isset($_GET["applist"])){
                 $app_list = explode(",", filter_input(INPUT_GET, 'applist'));
-                echo "\n app list 0 : ".$app_list[0];
-                echo "\n app list 1 : ".$app_list[1];
-                //It is asking for sync
+                if($results->num_rows===count($app_list)){
+                    
+                }
             }else{
             }
         }
