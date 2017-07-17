@@ -125,8 +125,18 @@ def device_sync(db):
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         http_response_code(200);
 	echo "This server interacts with the ThingPark API";
-        echo "\nid : ".$_GET['id'];
-        echo "\napplist : ".$_GET['applist'];
+        echo "\nid : ".filter_input(INPUT_GET, 'id');
+        //echo "\napplist : ".$_GET['applist'];
+        if(!empty($_GET["id"])){
+            $dev_id = $_GET['id'];
+        }
+        if(isset($_GET["applist"])){
+            $app_list = $_GET['applist'];
+            //It is asking for sync
+        }else{
+        }
+        
+        
 }
 
 
