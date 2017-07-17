@@ -127,7 +127,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if(!empty($_GET["id"])){
         //Getting device id
         $dev_id = filter_input(INPUT_GET, 'id');
-        echo "<br> id : ".$dev_id;
         //Geting app list
         if(isset($_GET["applist"])){
             //Separating apps
@@ -153,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $sql = "SELECT tpid FROM tapps WHERE id = $device_tapp_id";
                     $results = $mysqli->query($sql);
                     $remote_tapp_tpid = $results->fetch_array();
-                    echo "<br> results : ".print_r($remote_tapp_tpid);
+                    echo "<br> results : ".$remote_tapp_tpid[0];
                     foreach($app_list as $apps){
                         
                     }
