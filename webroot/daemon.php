@@ -141,15 +141,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     echo "<br>MySQL connection has been properly opened";
             }
             //Selecting app id's of the given device on the TAS
-            $sql = "SELECT tapp_id FROM ownerships WHERE device_id = $device_id";
+            $sql = "SELECT * FROM ownerships WHERE device_id = $device_id";
             $results = $mysqli->query($sql);
             //If the device is not found
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
-                $local_app_list = $results->fetch_array(MYSQLI_NUM);
+                $local_app_list = $results->fetch_array();
                 $results->free();
-                echo "<br> results : ".print_r($results);
+                echo print_r($local_app_list);
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
                     //Getting the app tpid
