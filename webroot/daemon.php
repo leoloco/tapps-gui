@@ -156,12 +156,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $app_tpid = $results->fetch_array();
                     array_push($stack,$app_tpid[0]);
                 }
-                if(count($tapp_list)===count($stack)){
+                if(count($app_list)===count($stack)){
                     echo "<br> device up to date";
-                }elseif (count($stack)> count($tapp_list)) {
+                }elseif (count($stack)> count($app_list)) {
                     echo"<br>Need update";
-                    echo "<br>applist lenght : ".count($tapp_list);
-                    echo "<br> stack".print_r($tapp_list);
+                    echo "<br>applist lenght : ".count($app_list);
+                    echo "<br> stack".print_r($app_list);
                     echo "<br>stack lenght : ".count($stack);
                     echo "<br> stack".print_r($stack);
                 }else{
