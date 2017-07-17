@@ -128,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if(!empty($_GET["id"])){
         //Getting device id
         $device_id = filter_input(INPUT_GET, 'id');
-        echo "<br> device_id :".$device_id;
         //Geting app list
         if(isset($_GET["applist"])){
             //Separating apps
@@ -148,14 +147,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
-                $local_app_list= $results->fetch_array(MYSQLI_NUM);
+                $local_app_list = $results->fetch_array(MYSQLI_NUM);
+                $result->free();
+                echo "<br> results : ".$results;
                 //For each app owned by the device on the tas
-                echo "<br> results ".print_r($local_app_list);
                 foreach($local_app_list as $app_id){
                     //Getting the app tpid
                     $sql = "SELECT tpid FROM tapps WHERE id = $app_id";
                     $results = $mysqli->query($sql);
                     $app_tpid = $results->fetch_array();
+                    $result->free();
                     array_push($stack,$app_tpid[0]);
                 }
                 foreach ($stack as $app){
@@ -170,8 +171,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
             }    
         }
-        
-    }        
+    }
+    $mysqli->close();
 }
 
 
