@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if(isset($_GET["applist"])){
             //Separating apps
             $app_list = explode(",", filter_input(INPUT_GET, 'applist'));
-            echo "<br>".$app_list;
+            echo "<br>". print_r($app_list);
             //Connecting to db
             $mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
             if ($mysqli->connect_errno) {
