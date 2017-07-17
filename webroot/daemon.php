@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
-                $local_app_list= $result->fetch_array(MYSQLI_NUM);
+                $local_app_list= $results->fetch_array(MYSQLI_NUM);
                 //For each app owned by the device on the tas
                 echo "<br> results ".print_r($local_app_list);
                 foreach($local_app_list as $app_id){
