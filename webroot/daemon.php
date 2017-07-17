@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if(isset($_GET["applist"])){
             //Separating apps
             $app_list = explode(",", filter_input(INPUT_GET, 'applist'));
-            echo "<br>". print_r($app_list);
+            echo "<br>". $app_list[0];
             //Connecting to db
             $mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
             if ($mysqli->connect_errno) {
@@ -152,7 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $sql = "SELECT tpid FROM tapps WHERE id = $device_tapp_id";
                     $results = $mysqli->query($sql);
                     $remote_tapp_tpid = $results->fetch_array();
-                    echo "<br> results : ".$remote_tapp_tpid[0];
+                    echo "<br> results lenght : ".count($remote_tapp_tpid);
+                    echo "<br> results 1 : ".$remote_tapp_tpid[0];
                     foreach($app_list as $apps){
                         
                     }
