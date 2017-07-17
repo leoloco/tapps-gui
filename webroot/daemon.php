@@ -149,8 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             }else{
                 $local_app_list = $results->fetch_array();
                 //For each app owned by the device on the tas
+                echo "<br> localapp list : ".print_r($local_app_list);
                 foreach($local_app_list as $app_id){
-                    echo "<br>app id : ".$app_id;
                     //Getting the app tpid
                     $sql = "SELECT tpid FROM tapps WHERE id = $app_id";
                     $results = $mysqli->query($sql);
