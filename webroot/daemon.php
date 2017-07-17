@@ -156,16 +156,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $app_tpid = $results->fetch_array();
                     array_push($stack,$app_tpid[0]);
                 }
-                if(count($app_list)===count($stack)){
-                    echo "<br> device up to date";
-                }elseif (count($stack)> count($app_list)) {
-                    echo"<br>Need update";
-                    echo "<br>applist lenght : ".count($app_list);
-                    echo "<br> applist : ".print_r($app_list);
-                    echo "<br>stack lenght : ".count($stack);
-                    echo "<br> stack :".print_r($stack);
-                }else{
-                    echo "<br> Applist furnished bigger than what is possible";
+                foreach ($app_list as $app){
+                    if(!in_array($app, $stack)){
+                        echo "<br>update needed";
+                    }else{
+                        echo "<br>up to date";
+                    }
                 }
             }    
         }
