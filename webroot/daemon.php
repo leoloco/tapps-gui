@@ -128,6 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if(!empty($_GET["id"])){
         //Getting device id
         $device_id = filter_input(INPUT_GET, 'id');
+        echo "<br> device_id :".$device_id;
         //Geting app list
         if(isset($_GET["applist"])){
             //Separating apps
