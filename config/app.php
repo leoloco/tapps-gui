@@ -230,7 +230,7 @@ return [
              */
             //'port' => 'non_standard_port_number',
             'username' => 'tapps',
-            'password' => 'leoloco',
+            'password' => 'password',
             'database' => 'tapps_db',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
