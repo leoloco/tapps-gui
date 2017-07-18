@@ -178,9 +178,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 //echo "<br>stack : ".print_r($stack);
                 foreach ($stack as $app){
-                    if(!in_array($app['id'], $app_list)){
+                    if(!in_array($app['tpid'], $app_list)){
                         //echo "<br>update needed";
-                        array_push($data, ['id' => $app['id'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
+                        array_push($data, ['id' => $app['tpid'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
                     }else{
                         //echo "<br>up to date";
                     }
