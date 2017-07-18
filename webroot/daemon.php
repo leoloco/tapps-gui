@@ -166,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $app_tpid = $results->fetch_array();
                     $results->free();
                     array_push($stack,$app_tpid[0]);
+                    echo "<br> app tpid : ".$app_tpid;
                 }
                 echo "<br>stack : ".print_r($stack);
                 foreach ($stack as $app){
