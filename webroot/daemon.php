@@ -86,42 +86,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-    /*
-     * @app.route('/sync/')
-def device_sync(db):
-    """
-    1. GET http://dedi.boulsh.net/sync?id=xxxx
-    RET: 0 = 'up to date'
-         1 = 'sync'
-    2. GET http://dedi.boulsh.net/sync?id=xxxx&applist=app-01,app-02
-    RET: json
-    3. GET http://dedi.boulsh.net/sync?id=xxxx&update=0
-    RET: 0 = 'up to date'
-         1 = 'sync'
-    """
-    try:
-        dev_id = request.query.id
-    except:
-        return('Device id missing')
-    try:
-        app_list = request.query.applist
-    except:
-        app_list = ""
-    dev_status = check_update(db, dev_id)
-    print ("dev_status: %s" %  dev_status)
-    if dev_status < 0:
-        return ('unknown device')
-    # request for synchronisation
-    if app_list == "":
-        if dev_status == 1:
-            return ('1') # sync
-        else:
-            return ('0') # up to date
-    # performing synchronization
-    return (gen_sync_app_list(db, dev_id, app_list.split(',')))
-     */
-
-
+/*
+ * 
+ * The following function listen for sync request at the adress : 
+ * /tapps-gui/daemon.php?id=<your_device_id>&applist=<some_app_installed_on_your_device>,<some_other>
+ * It checks which apps have been bought on the TAS by the owner of the device and returns a list of CDN credentials and URL's
+ * corresponding to the apps to install or to delete
+ * 
+ * 
+ */
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     http_response_code(200);
     $stack = array();
@@ -167,23 +140,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     if(!is_bool($results)){
                         $app_tpid = $results->fetch_array();
                         $results->free();
-                        /*
-                        echo "<br> stack0 : ".$app_tpid[0];
-                        echo "<br> stack1 : ".$app_tpid[1];
-                        echo "<br> stack2 : ".$app_tpid[2];
-                        echo "<br> stack cdn : ".$app_tpid['cdn_uri'];*/
                         array_push($stack,$app_tpid);
-                        //echo "<br> app tpid : ".$app_tpid[0];
                     }
                 }
-                //echo "<br>stack : ".print_r($stack);
                 foreach ($stack as $app){
                     if(!in_array($app['tpid'], $app_list)){
-                        //echo "<br>update needed";
                         array_push($data, ['id' => $app['tpid'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
-                    }else{
-                        //echo "<br>up to date";
                     }
+                }
+                foreach ($app_list as $app){
+                    if(!in_array($stack, $app)){
+                        echo "app".$app;
+                    }
+                }
+                if(count($data)===0){
+                    echo "<br>Up to date";
                 }
                 header('Content-type: application/json');
                 echo json_encode($data);
