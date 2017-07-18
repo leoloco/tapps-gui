@@ -144,26 +144,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             }
             //Selecting app id's of the given device on the TAS
             $sql = "SELECT * FROM ownerships WHERE device_id = $device_id";
-            echo "<br> device id : ".$device_id;
             $results = $mysqli->query($sql);
             //If the device is not found
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
+                //Putting first row in array
                 $local_app_list[0] = $results->fetch_array();
+                //Putting all rows in array
                 while ($local_app_list[$count]!==null){
                     $count++;
                     $local_app_list[$count]=$results->fetch_array();
                 }
-                echo "<br>".print_r($local_app_list);
                 $results->free();
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
                     //Getting the app tpid
-                    $sql = "SELECT tpid FROM tapps WHERE id = $app_id";
+                    $id = $app_id['tapp_id'];
+                    $sql = "SELECT tpid FROM tapps WHERE id = $id";
                     $results = $mysqli->query($sql);
                     $app_tpid = $results->fetch_array();
                     $results->free();
+                    echo "<br> app tpid".$app_tpid[0];
                     array_push($stack,$app_tpid[0]);
                 }
                 foreach ($stack as $app){
@@ -171,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         echo "<br>update needed";
                         $data = [ 'id' => $app];
                         header('Content-type: application/json');
-                        //echo json_encode($data);
+                        echo json_encode($data);
                     }else{
                         echo "<br>up to date";
                     }
