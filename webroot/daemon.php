@@ -168,7 +168,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     array_push($stack,$app_tpid[0]);
                     echo "<br> app tpid : ".$app_tpid[0];
                 }
-                echo "<br>stack : ".print_r($stack);
+                echo "<br>stack[0] : ".$stack[0];
+                echo "<br>stack[1] : ".$stack[1];
                 foreach ($stack as $app){
                     if(!in_array($app, $app_list)){
                         echo "<br>update needed";
