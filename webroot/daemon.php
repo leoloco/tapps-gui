@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     }
                 }
                 foreach ($app_list as $app){
-                    if(!in_array( $app,$stack)){
+                    if(!in_array($app ,$stack['tpid'])){
                         echo "app".$app;
                     }
                 }
