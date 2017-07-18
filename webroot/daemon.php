@@ -165,6 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $results = $mysqli->query($sql);
                     $app_tpid = $results->fetch_array();
                     $results->free();
+                    array_push($stack,$app_tpid[0]);
                 }
                 echo "<br>stack : ".print_r($stack);
                 foreach ($stack as $app){
