@@ -137,17 +137,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             //Connecting to db
             $mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
             if ($mysqli->connect_errno) {
-                    echo "<br>Sorry, this website is experiencing problems";
+                    //echo "<br>Sorry, this website is experiencing problems";
             }
             else{
-                    echo "<br>MySQL connection has been properly opened";
+                    //echo "<br>MySQL connection has been properly opened";
             }
             //Selecting app id's of the given device on the TAS
             $sql = "SELECT * FROM ownerships WHERE device_id = $device_id";
             $results = $mysqli->query($sql);
             //If the device is not found
             if($results->num_rows===0){
-                echo "unknown device";
+                //echo "unknown device";
             }else{
                 //Putting first row in array
                 $local_app_list[0] = $results->fetch_array();
@@ -167,18 +167,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         $app_tpid = $results->fetch_array();
                         $results->free();
                         array_push($stack,$app_tpid[0]);
-                        echo "<br> app tpid : ".$app_tpid[0];
+                        //echo "<br> app tpid : ".$app_tpid[0];
                     }
                 }
-                echo "<br>stack : ".print_r($stack);
+                //echo "<br>stack : ".print_r($stack);
                 foreach ($stack as $app){
                     if(!in_array($app, $app_list)){
-                        echo "<br>update needed";
+                        //echo "<br>update needed";
                         $data = [ 'id' => $app];
                         header('Content-type: application/json');
                         echo json_encode($data);
                     }else{
-                        echo "<br>up to date";
+                        //echo "<br>up to date";
                     }
                 }
             }    
