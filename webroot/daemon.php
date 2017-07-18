@@ -162,11 +162,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 foreach($local_app_list as $app_id){
                     //Getting the app tpid
                     $id = $app_id['tapp_id'];
-                    $sql = "SELECT tpid FROM tapps WHERE id = $id";
+                    $sql = "SELECT tpid, cdn_uri, cdn_login, cdn_password FROM tapps WHERE id = $id";
                     $results = $mysqli->query($sql);
                     if(!is_bool($results)){
                         $app_tpid = $results->fetch_array();
                         $results->free();
+                        echo "<br> stack0 : ".$app_tpid[0];
+                        echo "<br> stack1 : ".$app_tpid[1];
+                        echo "<br> stack2 : ".$app_tpid[2];
+                        echo "<br> stack cdn : ".$app_tpid['cdn_uri'];
                         array_push($stack,$app_tpid[0]);
                         //echo "<br> app tpid : ".$app_tpid[0];
                     }
