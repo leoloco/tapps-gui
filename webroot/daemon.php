@@ -174,13 +174,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 foreach ($stack as $app){
                     if(!in_array($app, $app_list)){
                         //echo "<br>update needed";
-                        $data = [ 'id' => $app];
-                        header('Content-type: application/json');
-                        echo json_encode($data);
+                        array_push($data,[ 'id' => $app]);
                     }else{
                         //echo "<br>up to date";
                     }
                 }
+                header('Content-type: application/json');
+                echo json_encode($data);
             }    
         }
     }
