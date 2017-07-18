@@ -127,6 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $stack = array();
     $local_app_list = array();
     $count = 0;
+    $data = array();
     if(!empty($_GET["id"])){
         //Getting device id
         $device_id = filter_input(INPUT_GET, 'id');
@@ -174,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 foreach ($stack as $app){
                     if(!in_array($app, $app_list)){
                         //echo "<br>update needed";
-                        array_push($data,[ 'id' => $app]);
+                        array_push($data, ['id' => $app]);
                     }else{
                         //echo "<br>up to date";
                     }
