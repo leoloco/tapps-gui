@@ -142,14 +142,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             }
             //Selecting app id's of the given device on the TAS
             $sql = "SELECT * FROM ownerships WHERE device_id = $device_id";
+            echo "<br> device id : ".$device_id;
             $results = $mysqli->query($sql);
             //If the device is not found
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
                 $local_app_list = $results->fetch_array();
+                echo "<br>local app list 0 : ". $local_app_list[0];
+                echo "<br>local app list 1 : ". $local_app_list[1];
                 $results->free();
-                echo print_r($local_app_list[1]);
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
                     //Getting the app tpid
@@ -164,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         echo "<br>update needed";
                         $data = [ 'id' => $app];
                         header('Content-type: application/json');
-                        echo json_encode($data);
+                        //echo json_encode($data);
                     }else{
                         echo "<br>up to date";
                     }
