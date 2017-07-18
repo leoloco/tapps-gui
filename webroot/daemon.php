@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         //Geting app list
         if(isset($_GET["applist"])){
             //Separating apps
-            $app_list = explode(",", filter_input(INPUT_GET, 'applist'));
+            $remote_app_list = explode(",", filter_input(INPUT_GET, 'applist'));
             //Connecting to db
             $mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
             if ($mysqli->connect_errno) {
@@ -143,14 +143,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         array_push($stack,$app_tpid);
                     }
                 }
-                foreach ($stack as $app){
-                    if(!in_array($app['tpid'], $app_list)){
+                $local_app_list = $stack;
+                foreach ($local_app_list as $app){
+                    if(!in_array($app['tpid'], $remote_app_list)){
                         array_push($data, ['id' => $app['tpid'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
-                    }
-                }
-                foreach ($app_list as $app){
-                    if(!in_array($app ,$stack['tpid'])){
-                        echo "app".$app;
                     }
                 }
                 if(count($data)===0){
