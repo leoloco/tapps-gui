@@ -125,6 +125,8 @@ def device_sync(db):
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     http_response_code(200);
     $stack = array();
+    $local_app_list = array();
+    $count = 0;
     if(!empty($_GET["id"])){
         //Getting device id
         $device_id = filter_input(INPUT_GET, 'id');
@@ -148,9 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
-                $local_app_list = $results->fetch_array();
-                echo "<br>local app list 0 : ". $local_app_list[0];
-                echo "<br>local app list 1 : ". $local_app_list[1];
+                $local_app_list[0] = $results->fetch_array();
+                while ($local_app_list[$count]!==null){
+                    $count++;
+                    $local_app_list[$count]=$results->fetch_array();
+                }
                 echo "<br>".print_r($local_app_list);
                 $results->free();
                 //For each app owned by the device on the tas
