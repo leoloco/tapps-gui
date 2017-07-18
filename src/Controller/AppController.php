@@ -109,7 +109,7 @@ class AppController extends Controller
      * @return \Cake\Network\Response|null|void
      */
     public function beforeFilter(Event $event) {
-        $this->Auth->allow(['login']);
+        $this->Auth->deny();
         $loggedIn = $this->Auth->user();
         if($loggedIn){
             $this->set(compact('loggedIn'));
