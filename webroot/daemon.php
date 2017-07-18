@@ -165,9 +165,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     $results = $mysqli->query($sql);
                     $app_tpid = $results->fetch_array();
                     $results->free();
-                    echo "<br> app tpid".$app_tpid[0];
-                    array_push($stack,$app_tpid[0]);
                 }
+                echo "<br>stack : ".print_r($stack);
                 foreach ($stack as $app){
                     if(!in_array($app, $app_list)){
                         echo "<br>update needed";
