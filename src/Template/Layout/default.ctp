@@ -92,9 +92,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         break;
                     case 'vendor':
                         echo "<li>";
-                        echo $this->Html->link(__('List Tapps'), ['controller' => 'Tapps', 'action' => 'index']);
-                        echo "</li>";
-                        echo "<li>";
                         echo $this->Html->link(__('List Devices'), ['controller' => 'Devices', 'action' => 'index']);
                         echo "</li>";
                         echo "<li>";

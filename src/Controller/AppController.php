@@ -70,7 +70,7 @@ class AppController extends Controller
             ],
             'logoutRedirect' => [
                 'controller' => 'Users',
-                'action' => 'ssoLogin'
+                'action' => 'login'
             ],
             'authenticate' => [
                 'Form' => [
@@ -109,7 +109,7 @@ class AppController extends Controller
      * @return \Cake\Network\Response|null|void
      */
     public function beforeFilter(Event $event) {
-        $this->Auth->allow(['ssoLogin']);
+        $this->Auth->allow(['login']);
         $loggedIn = $this->Auth->user();
         if($loggedIn){
             $this->set(compact('loggedIn'));

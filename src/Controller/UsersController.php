@@ -167,7 +167,7 @@ class UsersController extends AppController
      * 
      * @return \Cake\Http\Response|null Redirects on successful login, renders view otherwise.
      */
-    public function ssoLogin()
+    public function login()
     {
         $user = null;
         //Importing users table
@@ -277,7 +277,7 @@ class UsersController extends AppController
      */
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['logout','add','ssoLogin']);
+        $this->Auth->allow(['logout','add','login']);
         $loggedIn = $this->Auth->user();
         if($loggedIn){
             $this->set(compact('loggedIn'));
