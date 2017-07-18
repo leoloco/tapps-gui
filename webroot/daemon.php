@@ -151,6 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $local_app_list = $results->fetch_array();
                 echo "<br>local app list 0 : ". $local_app_list[0];
                 echo "<br>local app list 1 : ". $local_app_list[1];
+                echo "<br>".print_r($local_app_list);
                 $results->free();
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
