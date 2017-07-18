@@ -151,9 +151,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 }
                 if(count($data)===0){
                     echo "<br>Up to date";
+                }else{
+                    header('Content-type: application/json');
+                    echo json_encode($data);
                 }
-                header('Content-type: application/json');
-                echo json_encode($data);
             }    
         }
     }
