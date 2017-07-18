@@ -133,7 +133,7 @@ class AppController extends Controller
     }
     /*
      * Retrieves offers subscribed by a subscriber and update ownerships
-     * 
+     * This function does not work for the moment because de DX-API on which it is based does not respond correctly.
      * @return null
      */
     public function updateOwnerships(){
@@ -153,13 +153,14 @@ class AppController extends Controller
         $query->all();
         
         //Retriving subscribed offers trough DX-API
-        $url = "https://dx-api.thingpark.com/core/latest/api/applications";
+        $url = "https://dx-api.thingpark.com/core/latest/api/offers";
         $http = new Client([
             'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
         ]);
         $response = $http->get($url);
         foreach ($response->json as $elements){
             if(is_array($elements)){
+                //If it is a device
                 if(strpos($elements['id'], 'device') !== false){
                     foreach ($query as $ownership){
                         if($elements['id'] === $query->device_id)
@@ -168,8 +169,8 @@ class AppController extends Controller
                         }
                     }
                     
-
-                }  elseif (strpos($elements['id'], 'application') !== false) {
+                 //If it is an app
+                }elseif (strpos($elements['id'], 'application') !== false) {
 
                 }
 
