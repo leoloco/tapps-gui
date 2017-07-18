@@ -167,11 +167,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     if(!is_bool($results)){
                         $app_tpid = $results->fetch_array();
                         $results->free();
+                        /*
                         echo "<br> stack0 : ".$app_tpid[0];
                         echo "<br> stack1 : ".$app_tpid[1];
                         echo "<br> stack2 : ".$app_tpid[2];
-                        echo "<br> stack cdn : ".$app_tpid['cdn_uri'];
-                        array_push($stack,$app_tpid[0]);
+                        echo "<br> stack cdn : ".$app_tpid['cdn_uri'];*/
+                        array_push($stack,$app_tpid);
                         //echo "<br> app tpid : ".$app_tpid[0];
                     }
                 }
@@ -179,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 foreach ($stack as $app){
                     if(!in_array($app, $app_list)){
                         //echo "<br>update needed";
-                        array_push($data, ['id' => $app]);
+                        array_push($data, ['id' => $app['id'],'cdn_uri' => $app['cdn_uri']]);
                     }else{
                         //echo "<br>up to date";
                     }
