@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				//Retrieve user ID
                         	$ID = $xmlArray['ns2:subscribed']['subscriber']['ID'];
 				//Connect to DB
-                        	$mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
+                        	$mysqli = new mysqli("localhost", "root", "data123$", "tapps_db");
                         	if ($mysqli->connect_errno) {
                                 	fwrite($myfile,"Sorry, this website is experiencing problems. \n");
                         	}
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             //Separating apps
             $remote_app_list = explode(",", filter_input(INPUT_GET, 'applist'));
             //Connecting to db
-            $mysqli = new mysqli("localhost", "root", "leoloco", "tapps_db");
+            $mysqli = new mysqli("localhost", "root", "data123$", "tapps_db");
             if ($mysqli->connect_errno) {
                     //echo "<br>Sorry, this website is experiencing problems";
             }
