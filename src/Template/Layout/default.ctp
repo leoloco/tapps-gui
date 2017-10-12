@@ -53,7 +53,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 </li>
                 <li>
                     <?php
-                        echo $this->Html->link('login', ['controller' => 'users', 'action' => 'ssoLogin']);
+                        echo $this->Html->link('login', ['controller' => 'users', 'action' => 'login']);
                     ?>  
                 </li>
             </ul>
@@ -138,7 +138,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 echo $this->Html->link(__('Add user'), ['action' => 'add']);
                 echo "</li>";
                 echo "<li>";
-                echo $this->Html->link(__('Login'), ['action' => 'ssoLogin']);
+                echo $this->Html->link(__('Login'), ['action' => 'login']);
                 echo "</li>";
             }
         ?> 
