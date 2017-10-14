@@ -111,17 +111,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             //Connecting to db
             $mysqli = new mysqli("localhost", "root", "data123$", "tapps_db");
             if ($mysqli->connect_errno) {
-                    //echo "<br>Sorry, this website is experiencing problems";
+                    echo "<br>Sorry, this website is experiencing problems";
             }
             else{
-                    //echo "<br>MySQL connection has been properly opened";
+                    echo "<br>MySQL connection has been properly opened";
             }
             //Selecting app id's of the given device on the TAS
             $sql = "SELECT * FROM ownerships WHERE device_id = $device_id";
             $results = $mysqli->query($sql);
             //If the device is not found
             if($results->num_rows===0){
-                //echo "unknown device";
+                echo "unknown device";
             }else{
                 //Putting first row in array
                 $local_app_list[0] = $results->fetch_array();

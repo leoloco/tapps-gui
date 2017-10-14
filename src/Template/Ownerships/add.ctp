@@ -9,7 +9,7 @@
         <legend><?= __('Add Ownership') ?></legend>
         <?php
             echo $this->Form->control('device_id', ['options' => $devices]);
-            if($user['type']==='vendor'){
+            if($user['type']==='vendor' || $user['type']==='admin'){
                 echo $this->Form->control('user_id', ['options' => $users]);
             }
             echo $this->Form->control('tapp_id', ['options' => $tapps]);
