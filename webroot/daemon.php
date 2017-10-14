@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         $app_tpid = $results->fetch_array();
                         $results->free();
                         array_push($stack,$app_tpid);
-                        echo $app_tpid;
+                        echo "<br>app id : ".print_r($app_tpid);
                     }
                 }
                 $local_app_list = $stack;
