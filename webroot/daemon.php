@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $stack = array();
     $local_app_list = array();
     $count = 0;
-    $data = array();
+    $data = array(array("updates"),array("new"),array("delete"));
     if(!empty($_GET["id"])){
         //Getting device id
         $device_id = filter_input(INPUT_GET, 'id');
