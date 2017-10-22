@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $local_app_list = $stack;
                 foreach ($local_app_list as $app){
                     if(!in_array($app['tpid'], $remote_app_list)){
-                        array_push($data[0], ['id' => $app['tpid'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
+                        array_push($data[1], ['id' => $app['tpid'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
                     }
                 }
                 if(count($data)===0){
