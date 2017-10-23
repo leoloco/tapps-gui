@@ -150,12 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         array_push($data[1], ['id' => $app['tpid'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
                     }
                 }
-                foreach ($remote_app_list as $app){
-                    echo "<br>".$local_app_list['tpid'];
-                    if(!in_array($app['tpid'], $local_app_list['tpid'])){
-                        array_push($data[2], ['id' => $app['tpid'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
-                    }
-                }
                 if(count($data)===0){
                     //echo "<br>Up to date";
                     echo json_encode($data);
