@@ -151,6 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     }
                 }
                 foreach ($remote_app_list as $app){
+                    echo "<br>".$local_app_list['tpid'];
                     if(!in_array($app['tpid'], $local_app_list['tpid'])){
                         array_push($data[2], ['id' => $app['tpid'],'cdn_uri' => $app['cdn_uri'],'cdn_login' => $app['cdn_login'],'cdn_password' => $app['cdn_password']]);
                     }
