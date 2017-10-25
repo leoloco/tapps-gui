@@ -36,13 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }else{
                 /*
                 //Putting first row in array
-                $local_app_list[0] = $results->fetch_array();*/
+                $local_app_list[0] = $results->fetch_array();
                 //Putting all rows in array
                 while ($local_app_list[$count]!==null){
                     $count++;
                     $local_app_list[$count]=$results->fetch_array();
                 }
                 $results->free();
+                 */
+                
+                while(($row =  mysql_fetch_assoc($result))) {
+                    $local_app_list[] = $row;
+                }
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
                     //Getting the app tpid
