@@ -153,27 +153,18 @@ class AppController extends Controller
         $query->all();
         
         //Retriving subscribed offers trough DX-API
-        $url = "https://dx-api.thingpark.com/core/latest/api/offers";
+        $url = "https://dx-api.thingpark.com/core/latest/api/applications";
         $http = new Client([
             'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
         ]);
         $response = $http->get($url);
         foreach ($response->json as $elements){
             if(is_array($elements)){
-                //If it is a device
-                if(strpos($elements['id'], 'device') !== false){
-                    foreach ($query as $ownership){
-                        if($elements['id'] === $query->device_id)
-                        {
-                            
-                        }
+                foreach ($query as $ownership){
+                    if($elements['id'] === $query->tapp_id){
+                        
                     }
-                    
-                 //If it is an app
-                }elseif (strpos($elements['id'], 'application') !== false) {
-
                 }
-
             }
         }
     }

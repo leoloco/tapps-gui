@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	switch (array_keys($xmlArray)[0])
         {
                 case "ns2:subscribed":
-			if(strpos($xmlArray['ns2:subscribed']['href'],'thingpark/smp/rest/applications/351/subscriptions')!==false){
+			if(strpos($xmlArray['ns2:subscribed']['href'],'thingpark/smp/rest/applications/200009945/subscriptions')!==false){
 				//Retrieve user ID
                         	$ID = $xmlArray['ns2:subscribed']['subscriber']['ID'];
 				//Connect to DB
