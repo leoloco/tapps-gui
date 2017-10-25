@@ -35,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sth->execute();
         }
         while ($row = $sth->fetch()){
-            echo print_r($row);
             array_push($local_app_list, ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
         }
-        //echo print_r($local_app_list);
+        header('Content-type: application/json');
+        echo json_encode($local_app_list);
 }    
 
 ?>
