@@ -34,8 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
+                /*
                 //Putting first row in array
-                $local_app_list[0] = $results->fetch_array();
+                $local_app_list[0] = $results->fetch_array();*/
                 //Putting all rows in array
                 while ($local_app_list[$count]!==null){
                     $count++;
