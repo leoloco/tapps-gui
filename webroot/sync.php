@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stack = array();
         $local_app_list = array();
         $count = 0;
-        
+  
         //Getting posted JSON string 
         $json = file_get_contents("php://input");
         //Decoding JSON string to PHP array
@@ -22,10 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //Getting the TAS applist
         $mysqli = new mysqli("localhost", "root", "data123$", "tapps_db");
         if ($mysqli->connect_errno) {
-            echo "<br>Sorry, this website is experiencing problems";
+            header('Content-type: application/json');
+            echo json_encode(array("error" => "mysql error"));
         }
         else{
             //Selecting app id's of the given device on the TAS
+            echo "Device id : ".$remote_app_list->device_id;
             $sql = "SELECT * FROM ownerships WHERE device_id = $remote_app_list->device_id";
             $results = $mysqli->query($sql);
             //If the device is not found
