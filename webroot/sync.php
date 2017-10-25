@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 while($row=mysql_fetch_assoc( $results)){
                         //$local_app_list[] = $row; // Inside while loop
-                        array_push($local_app_list[],$row);
+                        array_push($local_app_list,$row);
                 }
                 //echo print_r($new_array);
                 //Returning result
