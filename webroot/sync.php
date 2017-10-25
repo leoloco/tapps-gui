@@ -45,9 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $results->free();
                  */
                 
-                while(($row =  mysql_fetch_assoc($result))) {
+                while(($row =  mysql_fetch_assoc($results))) {
                     $local_app_list[] = $row;
-                    echo "row : ".$row;
                 }
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
