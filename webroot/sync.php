@@ -34,23 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
-                while($row =  mysql_fetch_assoc($results)) {
-                    $local_app_list[] = $row;
-                    echo "row : ".print_r($row);
+                while($row=mysql_fetch_assoc( $result)){
+                        $new_array[] = $row; // Inside while loop
                 }
-                //For each app owned by the device on the tas
-                foreach($local_app_list as $app_id){
-                    //Getting the app tpid
-                    $id = $app_id['tapp_id'];
-                    $sql = "SELECT tpid, cdn_uri, cdn_login, cdn_password FROM tapps WHERE id = $id";
-                    $results = $mysqli->query($sql);
-                    if(!is_bool($results)){
-                        $app_tpid = $results->fetch_array();
-                        $results->free();
-                        array_push($stack,$app_tpid);
-                    }
-                }
-                $local_app_list = $stack;
+                echo print_r($new_array);
                 //Returning result
                 header('Content-type: application/json');
                 //Encoding array to JSON string
