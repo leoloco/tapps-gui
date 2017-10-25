@@ -11,6 +11,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $stack = array();
+        $local_data = array();
         $local_app_list = array();
         $count = 0;
   
@@ -27,14 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         while ($row = $sth->fetch()){
             echo print_r($row);
-            array_push($local_app_list, $row['tapp_id']);
+            array_push($local_data, $row['tapp_id']);
         }
-        foreach ($local_app_list as $tpid){
+        foreach ($local_data as $tpid){
             $sth = $pdo->prepare('SELECT tpid, cdn_uri, cdn_login, cdn_password FROM tapps WHERE id = :tpid');
             $sth->bindParam(':tpid', $tpid, PDO::PARAM_INT);
             $sth->execute();
         }
-        $local_app_list = array();
         while ($row = $sth->fetch()){
             echo print_r($row);
             array_push($local_app_list, ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
