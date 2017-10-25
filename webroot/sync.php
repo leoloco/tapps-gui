@@ -11,7 +11,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $stack = array();
-        $local_app_list = array("lolo");
+        $local_app_list = array();
         $count = 0;
   
         //Getting posted JSON string 
@@ -34,11 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
-                /*
+                
                 while($row=mysql_fetch_assoc( $results)){
-                        $new_array[] = $row; // Inside while loop
+                        //$local_app_list[] = $row; // Inside while loop
+                        array_push($local_app_list[],$row);
                 }
-                echo print_r($new_array);*/
+                //echo print_r($new_array);
                 //Returning result
                 header('Content-type: application/json');
                 //Encoding array to JSON string
