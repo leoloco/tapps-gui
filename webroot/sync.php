@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $foo = file_get_contents("php://input");
         header('Content-type: application/json');
         $data = var_dump(json_decode($foo, true));
-        echo json_encode($data);
+        echo print_r($data);
 }    
 
 ?>
