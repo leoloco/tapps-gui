@@ -11,7 +11,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $stack = array();
-        $local_app_list = array();
+        $local_app_list = array("lolo");
         $count = 0;
   
         //Getting posted JSON string 
