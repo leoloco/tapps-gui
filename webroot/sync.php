@@ -27,26 +27,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         while ($row = $sth->fetch()){
             echo print_r($row);
+            array_push($local_app_list, $row['tapp_id']);
         }
-        /*
-        $mysql = mysql_connect("localhost", "root", "data123$");
-        mysql_select_db("tapps_db");
-        if($mysql){
-            $device_id = $remote_app_list['device_id'];
-            $results = mysql_query("SELECT * FROM ownerships WHERE device_id = $device_id");
-            while($row=mysql_fetch_assoc($results)){
-                $local_app_list[] = $row; // Inside while loop
-                //array_push($local_app_list,$row);
-            }
-            header('Content-type: application/json');
-                //Encoding array to JSON string
-                echo json_encode($local_app_list);
+        foreach ($local_app_list as $tapp_id){
+            $sth = $pdo->prepare('SELECT tpid, cdn_uri, cdn_login, cdn_password FROM tapps WHERE id = :tapp_id');
+            $sth->bindParam(':tapp_id', $tapp_id, PDO::PARAM_INT);
+            $sth->execute();
         }
-        else{
-            echo "error";
+        while ($row = $sth->fetch()){
+            echo print_r($row);
+            array_push($local_app_list, ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
         }
-         */
-        
+        echo print_r($local_app_list);
         /*
         //Getting the TAS applist
         $mysqli = new mysqli("localhost", "root", "data123$", "tapps_db");
