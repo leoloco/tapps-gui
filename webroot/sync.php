@@ -34,20 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
-                /*
-                //Putting first row in array
-                $local_app_list[0] = $results->fetch_array();
-                //Putting all rows in array
-                while ($local_app_list[$count]!==null){
-                    $count++;
-                    $local_app_list[$count]=$results->fetch_array();
-                }
-                $results->free();
-                 */
-                
-                while(($row =  mysql_fetch_assoc($results))) {
+                while($row =  mysql_fetch_assoc($results)) {
                     $local_app_list[] = $row;
-                    echo "row : ".$row;
+                    echo "row : ".print_r($row);
                 }
                 //For each app owned by the device on the tas
                 foreach($local_app_list as $app_id){
