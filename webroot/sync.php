@@ -19,6 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //Decoding JSON string to PHP array
         $remote_app_list = json_decode($json, true);
         
+        $db = new PDO('mysql:host=localhost;dbname=tapps_db;charset=utf8mb4', 'root', 'data123$');
+        $device_id = $remote_app_list['device_id'];
+        $stmt = $pdo->query('SELECT * FROM ownerships WHERE device_id = $device_id');
+        while ($row = $stmt->fetch()){
+            echo print_r($row);
+        }
+        /*
         $mysql = mysql_connect("localhost", "root", "data123$");
         mysql_select_db("tapps_db");
         if($mysql){
@@ -35,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else{
             echo "error";
         }
+         */
         
         /*
         //Getting the TAS applist
