@@ -9,7 +9,8 @@ echo "ok";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $foo = file_get_contents("php://input");
-        echo print_r(var_dump(json_decode($foo, true)));
+        header('Content-type: application/json');
+        echo json_encode(var_dump(json_decode($foo, true)));
 }    
 
 ?>
