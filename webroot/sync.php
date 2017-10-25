@@ -19,6 +19,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //Decoding JSON string to PHP array
         $remote_app_list = json_decode($json, true);
         
+        $mysql = mysql_connect("localhost", "root", "data123$");
+        mysql_select_db("tapps_db");
+        if($mysql){
+            $device_id = $remote_app_list['device_id'];
+            $results = mysql_query("SELECT * FROM ownerships WHERE device_id = $device_id");
+            while($row=mysql_fetch_assoc($results)){
+                $local_app_list[] = $row; // Inside while loop
+                //array_push($local_app_list,$row);
+            }
+            header('Content-type: application/json');
+                //Encoding array to JSON string
+                echo json_encode($local_app_list);
+        }
+        else{
+            echo "error";
+        }
+        
+        /*
         //Getting the TAS applist
         $mysqli = new mysqli("localhost", "root", "data123$", "tapps_db");
         if ($mysqli->connect_errno) {
@@ -45,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 //Encoding array to JSON string
                 echo json_encode($local_app_list);
             }
-        }   
+        }*/ 
 }    
 
 ?>
