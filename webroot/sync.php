@@ -34,10 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($results->num_rows===0){
                 echo "unknown device";
             }else{
+                /*
                 while($row=mysql_fetch_assoc( $results)){
                         $new_array[] = $row; // Inside while loop
                 }
-                echo print_r($new_array);
+                echo print_r($new_array);*/
                 //Returning result
                 header('Content-type: application/json');
                 //Encoding array to JSON string
