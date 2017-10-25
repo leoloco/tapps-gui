@@ -20,9 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $remote_app_list = json_decode($json, true);
         
         $pdo = new PDO('mysql:host=localhost;dbname=tapps_db;charset=utf8mb4', 'root', 'data123$');
-        $device_id = $remote_app_list['device_id'];
-        $stmt = $pdo->query('SELECT * FROM ownerships WHERE device_id = $device_id');
-        while ($row = $stmt->fetch()){
+        $sth = $pdo->prepare('SELECT * FROM ownerships WHERE device_id = :device_id');
+        $sth->bindParam(':device_id', $remote_app_list['device_id'], PDO::PARAM_INT);
+        $sth->execute();
+        
+        
+        while ($row = $sth->fetch()){
             echo print_r($row);
         }
         /*
