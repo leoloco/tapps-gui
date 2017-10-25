@@ -27,13 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         while ($row = $sth->fetch()){
             echo print_r($row);
-            array_push($local_app_list, $row['tapp_id']);
+            array_push($local_app_list, $row['tpid']);
         }
-        foreach ($local_app_list as $tapp_id){
-            $sth = $pdo->prepare('SELECT tpid, cdn_uri, cdn_login, cdn_password FROM tapps WHERE id = :tapp_id');
-            $sth->bindParam(':tapp_id', $tapp_id, PDO::PARAM_INT);
+        foreach ($local_app_list as $tpid){
+            $sth = $pdo->prepare('SELECT tpid, cdn_uri, cdn_login, cdn_password FROM tapps WHERE id = :tpid');
+            $sth->bindParam(':tpid', $tpid, PDO::PARAM_INT);
             $sth->execute();
         }
+        $local_app_list = null;
+        $local_app_list =array();
         while ($row = $sth->fetch()){
             echo print_r($row);
             array_push($local_app_list, ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
