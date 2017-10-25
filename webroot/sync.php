@@ -34,8 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sth->bindParam(':tpid', $tpid, PDO::PARAM_INT);
             $sth->execute();
         }
+        $count = $sth->rowCount();
+        echo "Effacement de ".$count."lignes \n";
         while ($row = $sth->fetch()){
-            echo print_r($row);
             array_push($local_app_list[], ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
         }
         header('Content-type: application/json');
