@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         
         while ($row = $sth->fetch()){
-            echo print_r($row);
             array_push($local_data, $row['tapp_id']);
         }
         foreach ($local_data as $tpid){
