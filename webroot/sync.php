@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         else{
             //Selecting app id's of the given device on the TAS
-            echo "Device id : ".$remote_app_list['device_id'];
-            $sql = "SELECT * FROM ownerships WHERE device_id = $remote_app_list->device_id";
+            $device_id = $remote_app_list['device_id'];
+            $sql = "SELECT * FROM ownerships WHERE device_id = $device_id";
             $results = $mysqli->query($sql);
             //If the device is not found
             if($results->num_rows===0){
