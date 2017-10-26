@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 			$results = $mysqli->query($sql);
                                 			//Check if user exsist
                                 			if($results->num_rows===0){
-                                                		$sql = "INSERT INTO users (tp_id,username,name,email,password,org,type) VALUES ($ID ,'$name', '$name','$email','', '$org', 'subscriber')";
+                                                		$sql = "INSERT INTO users (tpid,username,name,email,password,org,type) VALUES ($ID ,'$name', '$name','$email','', '$org', 'subscriber')";
                                                 		if ($mysqli->query($sql) === TRUE) {
                                                                     error_log("New record created successfully");
                                                 		}
