@@ -65,6 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 array_push($returned_app_list['delete'], ['id'=>$remote_id]);
             }
         }
+        foreach ($returned_app_list['new'] as $returned_app){
+            foreach($local_app_list as $local_app){
+                if($returned_app['id']===$local_app['id']){
+                    array_push($returned_app, ['cdn_login' => $local_app['cdn_login'],'cdn_password' => $local_app['cdn_password'],'cdn_uri' => $local_app['cdn_uri']]);
+                }
+            }
+        }
         header('Content-type: application/json');
         echo (json_encode($returned_app_list,TRUE));
 }    
