@@ -41,14 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sth->execute();
             //Putting results in array
             while ($row = $sth->fetch()){
-                array_push($local_app_list, ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
+                array_push($local_app_list, ['id' => $row['tpid'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password'],'cdn_uri' => $row['cdn_uri']]);
             }
         }
-        
-        header('Content-type: application/json');
-        foreach ($remote_app_list['apps'] as $app){
-            echo print_r($app);
+        foreach ($local_app_list as $app){
+            if(!in_array($app,$remote_app_list['apps'])){
+                echo print_r($app);
+            }
         }
+        header('Content-type: application/json');
 }    
 
 ?>
