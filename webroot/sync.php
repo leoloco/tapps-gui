@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $local_data = array();
         $local_app_list = array();
         $returned_app_list = array("new"=>array(),"update"=>array(),"delete"=>array());
-        echo print_r($returned_app_list);
   
         //Getting posted JSON string 
         $json = file_get_contents("php://input");
@@ -62,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         header('Content-type: application/json');
+        echo (json_encode($returned_app_list,TRUE));
 }    
 
 ?>
