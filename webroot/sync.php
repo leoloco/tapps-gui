@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sth->bindParam(':tpid', $tpid, PDO::PARAM_INT);
             $sth->execute();
             while ($row = $sth->fetch()){
-                array_push($local_app_list[], ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
+                array_push($local_app_list, ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
             }
         }
         
