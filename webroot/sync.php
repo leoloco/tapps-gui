@@ -46,9 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $remote_app_list=$remote_app_list['apps'];
         echo print_r($remote_app_list);
+        echo print_r($local_app_list);
         foreach ($local_app_list as $app){
             if(!in_array($app, $remote_app_list['apps'])){
-                echo print_r($app);
+                //echo print_r($app);
             }
         }
         header('Content-type: application/json');
