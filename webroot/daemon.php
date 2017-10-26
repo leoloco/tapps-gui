@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				else{
 					error_log("MySQL connection has been properly opened");
 				}
-                        	$sql = "SELECT * FROM users WHERE tp_id = $ID";
+                        	$sql = "SELECT * FROM users WHERE tpid = $ID";
 				$results = $mysqli->query($sql);
 				//Check if user exsist
     				if($results->num_rows===0){
