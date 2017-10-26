@@ -210,7 +210,7 @@ Type::build('timestamp')
  * advanced ways of loading plugins
  *
  * Plugin::loadAll(); // Loads all plugins at once
- * Plugin::load('Migrations'); //Loads a single plugin named Migrations
+ Plugin::load('Migrations'); //Loads a single plugin named Migrations
  *
  */
 
@@ -218,6 +218,7 @@ Type::build('timestamp')
  * Only try to load DebugKit in development mode
  * Debug Kit should not be installed on a production system
  */
+Plugin::load('Migrations'); //Loads a single plugin named Migrations
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
