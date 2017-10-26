@@ -2,8 +2,10 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
-        $xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
-        file_put_contents('/home/log.txt', $xmlArray);
+        //$xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
+        $postData = file_get_contents('php://input');
+        $xml = simplexml_load_string($postData);
+        file_put_contents('/home/log.txt', "xmlarray : ".$xml);
 	switch (array_keys($xmlArray)[0])
         {
                 case "ns2:subscribed":
