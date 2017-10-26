@@ -3,9 +3,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
-        $myfile=fopen('/home/log.txt','r+');
-        file_put_contents($myfile, $xmlArray);
-        fclose($myfile);
+        file_put_contents('/home/log.txt', $xmlArray);
 	switch (array_keys($xmlArray)[0])
         {
                 case "ns2:subscribed":
