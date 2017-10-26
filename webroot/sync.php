@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $local_data = array();
         $local_app_list = array();
+        $returned_app_list = array("new"=>array(),"update"=>array(),"delete"=>array());
+        echo print_r($returned_app_list);
   
         //Getting posted JSON string 
         $json = file_get_contents("php://input");
@@ -45,13 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         $remote_app_list=$remote_app_list['apps'];
-        /*
-        echo "\n remote : ";
-        echo print_r($remote_app_list);
-        echo "\n local : ";
-        echo print_r($local_app_list);
-        foreach ($remote_app_list as $remote_app){
-        }*/
+
         $local_ids = array();
         $remote_ids = array();
         foreach ($local_app_list as $app){
@@ -60,10 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($remote_app_list as $app){
             array_push($remote_ids,$app['id']);
         }
-        echo "\n remote : ";
-        echo print_r($remote_ids);
-        echo "\n local : ";
-        echo print_r($local_ids);
+        foreach($local_ids as $local_id){
+            if(in_array($local_id, $remote_ids)){
+                
+            }
+        }
         header('Content-type: application/json');
 }    
 
