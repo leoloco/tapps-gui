@@ -3,6 +3,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
+        file_put_contents("/home/log.txt", $xmlArray);
         error_log(implode($xmlArray));
 	switch (array_keys($xmlArray)[0])
         {
