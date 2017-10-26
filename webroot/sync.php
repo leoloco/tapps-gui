@@ -46,7 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         header('Content-type: application/json');
-        echo print_r($remote_app_list);
+        foreach ($remote_app_list['apps'] as $app){
+            echo print_r($app);
+        }
 }    
 
 ?>
