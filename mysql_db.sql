@@ -54,3 +54,17 @@ CREATE TABLE users (
   type varchar(255) NOT NULL,
   API_KEY TEXT
 );
+
+DROP TABLE IF EXISTS ownerships_apps;
+CREATE TABLE ownerships_apps (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id int NOT NULL,
+  tapp_id int NOT NULL
+);
+
+DROP TABLE IF EXISTS ownerships_devices;
+CREATE TABLE ownerships_devices (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  device_id int NOT NULL,
+  user_id int NOT NULL
+);
