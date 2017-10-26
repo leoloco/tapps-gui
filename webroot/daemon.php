@@ -3,8 +3,9 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
         $xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
-        file_put_contents("/home/log.txt", $xmlArray);
-        error_log(implode($xmlArray));
+        $myfile=fopen('/home/log.txt','r+');
+        file_put_contents("/home/log.txt", "caca");
+        fclose($myfile);
 	switch (array_keys($xmlArray)[0])
         {
                 case "ns2:subscribed":
@@ -55,14 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 			if($results->num_rows===0){
                                                 		$sql = "INSERT INTO users (tp_id,username,name,email,password,org,type) VALUES ($ID ,'$name', '$name','$email','', '$org', 'subscriber')";
                                                 		if ($mysqli->query($sql) === TRUE) {
-                                                        		fwrite($myfile, "New record created successfully \n");
+                                                                    error_log("New record created successfully");
                                                 		}
                                                 		else {
-                                                        		fwrite($myfile, "Error: " . $sql . "\n" . $mysqli->error);
+                                                                    error_log("Error: " . $sql . "\n" . $mysqli->error);
                                                 		}
 							}
 							else{
-								fwrite($myfile,"double notification from thingpark");
+                                                            error_log("double notification from thingpark");
 							}
                                         	}
 					}
@@ -70,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         				curl_close($ch);
 				}
 				else {
-                                	fwrite($myfile,"User already exists \n");
+                                	error_log("User already exists");
                         	}
 			}
 			else {
-				fwrite($myfile, "An application has been bought \n");
+				error_log("An application has been bought");
 			}
 			http_response_code(200);
                         break;
@@ -82,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         http_response_code(200);
                         break;
         }
-        fclose($myfile);
 }
 
 
