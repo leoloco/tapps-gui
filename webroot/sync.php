@@ -56,8 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             array_push($remote_ids,$app['id']);
         }
         foreach($local_ids as $local_id){
-            if(in_array($local_id, $remote_ids)){
-                
+            if(!in_array($local_id, $remote_ids)){
+                array_push($returned_app_list['new']['id'], $local_id);
+            }
+        }
+        foreach($remote_ids as $remote_id){
+            if(!in_array($remote_id, $local_ids)){
+                array_push($returned_app_list['delete']['id'], $remote_id);
             }
         }
         header('Content-type: application/json');
