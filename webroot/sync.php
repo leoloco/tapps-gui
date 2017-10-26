@@ -57,8 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         foreach($local_ids as $local_id){
             if(!in_array($local_id, $remote_ids)){
-                echo array_search($local_id, $local_app_list);
-                array_push($returned_app_list['new'], ['id'=>$local_id]);
+                foreach ($local_app_list as $local_app){
+                    if($local_app['id']===$local_id){
+                        array_push($returned_app_list['new'], ['id'=>$local_app['id'],'cdn_login' => $local_app['cdn_login'],'cdn_password' => $local_app['cdn_password'],'cdn_uri' => $local_app['cdn_uri']]);
+                    }
+                }
             }
         }
         foreach($remote_ids as $remote_id){
@@ -68,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         header('Content-type: application/json');
-        //echo (json_encode($returned_app_list,TRUE));
+        echo (json_encode($returned_app_list,TRUE));
 }    
 
 ?>
