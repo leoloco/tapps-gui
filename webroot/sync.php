@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         header('Content-type: application/json');
+        echo json_encode($remote_app_list);
 }    
 
 ?>
