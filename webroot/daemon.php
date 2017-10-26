@@ -2,11 +2,11 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(200);
-        //$xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
-        $postData = file_get_contents('php://input');
+        $xmlArray = xml2array('php://input', $get_atributes =1, $priority='tag');
+        //$postData = file_get_contents('php://input');
         //$xmlArray = simplexml_load_string($postData);
-        //file_put_contents('/home/log.txt', "xmlarray : ".print_r($xmlArray));
-        $xmlArray=XML2Array($postData);
+        file_put_contents('/home/log.txt', "xmlarray : ".print_r($xmlArray));
+        //$xmlArray=XML2Array($postData);
 	switch (array_keys($xmlArray)[0])
         {
                 case "ns2:subscribed":
@@ -85,23 +85,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         break;
         }
 }
-
-function XML2Array ( $xml )
+/*
+function XML2Array ($xml)
 {
-    $array = simplexml_load_string ( $xml );
-    $newArray = array ( ) ;
-    $array = ( array ) $array ;
-    foreach ( $array as $key => $value )
+    $array = simplexml_load_string ($xml);
+    $newArray = array();
+    $array = (array)$array ;
+    foreach ($array as $key => $value)
     {
-        $value = ( array ) $value ;
-        $newArray [ $key] = $value [ 0 ] ;
+        $value = (array)$value ;
+        $newArray [$key] = $value [0] ;
     }
     $newArray = array_map("trim", $newArray);
   return $newArray ;
 } 
+*/
 
 
-/*
 function xml2array($url, $get_attributes = 1, $priority = 'tag')
 {
     $contents = "";
@@ -240,6 +240,5 @@ function xml2array($url, $get_attributes = 1, $priority = 'tag')
     }
     return ($xml_array);
 }
-*/
 
 ?>
