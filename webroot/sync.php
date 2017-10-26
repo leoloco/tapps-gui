@@ -52,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo print_r($local_app_list);
         foreach ($remote_app_list as $remote_app){
         }*/
+        $local_ids = array();
+        $remote_ids = array();
         foreach ($local_app_list as $app){
             array_push($local_ids,$app['id']);
         }
