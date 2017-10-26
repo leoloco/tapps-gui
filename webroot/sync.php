@@ -29,14 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         while ($row = $sth->fetch()){
             array_push($local_data, $row['tapp_id']);
         }
-        echo "local data : ".print_r($local_data)."<br>";
+        echo print_r($local_data);
         foreach ($local_data as $tpid){
             $sth = $pdo->prepare('SELECT tpid, cdn_uri, cdn_login, cdn_password FROM tapps WHERE id = :tpid');
             $sth->bindParam(':tpid', $tpid, PDO::PARAM_INT);
             $sth->execute();
         }
-        $count = $sth->rowCount();
-        echo "Nbre ligne : ".$count;
         while ($row = $sth->fetch()){
             array_push($local_app_list[], ['id' => $row['tpid'],'cdn_uri' => $row['cdn_uri'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password']]);
         }
