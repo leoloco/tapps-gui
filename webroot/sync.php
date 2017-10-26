@@ -53,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($remote_app_list as $remote_app){
         }*/
         foreach ($local_app_list as $app){
-            array_push($app['id'], $local_ids);
+            array_push($local_ids,$app['id']);
         }
         foreach ($remote_app_list as $app){
-            array_push($app['id'], $remote_ids);
+            array_push($remote_ids,$app['id']);
         }
         echo "\n remote : ";
         echo print_r($remote_ids);
