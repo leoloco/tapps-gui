@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				//Connect to DB
                         	$mysqli = new mysqli("localhost", "root", "data123$", "tapps_db");
                         	if ($mysqli->connect_errno) {
-                                	fwrite($myfile,"Sorry, this website is experiencing problems. \n");
+                                	error_log("Sorry, this website is experiencing problems");
                         	}
 				else{
-					fwrite($myfile,"MySQL connection has been properly opened \n");
+					error_log("MySQL connection has been properly opened");
 				}
                         	$sql = "SELECT * FROM users WHERE tp_id = $ID";
 				$results = $mysqli->query($sql);
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         curl_setopt($ch, CURLOPT_URL, $url);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                                         // $output contains the output string
-                                	fwrite($myfile,"No user corresponds to this ID, let's create one \n");
+                                	error_log("No user corresponds to this ID, let's create one");
 					//Retrieve subscriber data
 					$sql = "SELECT API_KEY FROM users WHERE type = 'vendor'";
 					$results = $mysqli->query($sql);
