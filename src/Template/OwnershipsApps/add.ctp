@@ -13,7 +13,7 @@
         <li><?= $this->Html->link(__('New Tapp'), ['controller' => 'Tapps', 'action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="ownershipsApps form large-9 medium-8 columns content">
+<div class="ownershipsApps form large-12 medium-12 columns content">
     <?= $this->Form->create($ownershipsApp) ?>
     <fieldset>
         <legend><?= __('Add Ownerships App') ?></legend>
