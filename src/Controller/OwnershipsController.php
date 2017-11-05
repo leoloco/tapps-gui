@@ -57,6 +57,10 @@ class OwnershipsController extends AppController
     public function add()
     {
         $user = $this->Auth->user();
+        
+        $ownershipsApps = TableRegistry::get('OwnershipsApps');
+        $ownershipsDevices = TableRegistry::get('OwnershipsDevices');
+        
         $ownership = $this->Ownerships->newEntity();
         if ($this->request->is('post')) {
             $ownership = $this->Ownerships->patchEntity($ownership, $this->request->getData());
@@ -70,9 +74,18 @@ class OwnershipsController extends AppController
             }
             $this->Flash->error(__('The ownership could not be saved. Please, try again.'));
         }
-        $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
-        $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
-        $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
+        if($user['type']==='subscriber'){
+            $tapps = $ownershipsApps->find('list', ['limit' => 200])
+                    ->where(['user_id' => $user['id']]);
+            $devices = $ownershipsDevices->find('list', ['limit' => 200])
+                    ->where(['user_id' => $user['id']]);
+            $users = $user;
+        }
+        else{
+            $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
+            $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
+            $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
+        }
         $tapps->select('version_latest');
         $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
         $this->set('_serialize', ['ownership']);
