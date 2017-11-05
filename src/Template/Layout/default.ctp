@@ -78,6 +78,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         echo "<li>";
                         echo $this->Html->link(__('List Ownerships Apps'), ['controller'=>'OwnershipsApps', 'action' => 'index']);
                         echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Ownerships Devices'), ['controller'=>'OwnershipsDevices', 'action' => 'index']);
+                        echo "</li>";
                         break;
                     case 'appmanager':
                         echo "<li>";
@@ -102,6 +105,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         echo "</li>";
                         echo "<li>";
                         echo $this->Html->link(__('New Ownership'), ['controller' => 'Ownerships', 'action' => 'add']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Ownerships Apps'), ['controller'=>'OwnershipsApps', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Ownerships Devices'), ['controller'=>'OwnershipsDevices', 'action' => 'index']);
                         echo "</li>";
                         break;
                     case 'admin':
@@ -132,6 +141,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         echo "<li>";
                         echo $this->Html->link(__('List Ownerships Apps'), ['controller'=>'OwnershipsApps', 'action' => 'index']);
                         echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('Add Ownerships Apps'), ['controller'=>'OwnershipsApps', 'action' => 'add']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('List Ownerships Devices'), ['controller'=>'OwnershipsDevices', 'action' => 'index']);
+                        echo "</li>";
+                        echo "<li>";
+                        echo $this->Html->link(__('Add Ownerships Devices'), ['controller'=>'OwnershipsDevices', 'action' => 'add']);
+                        echo "</li>";
+                        
                         break;
                     default:
                         echo "<li>";
