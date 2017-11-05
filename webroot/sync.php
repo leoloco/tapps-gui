@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //Connecting to db
         $pdo = new PDO('mysql:host=localhost;dbname=tapps_db;charset=utf8mb4', 'root', 'data123$');
         //Building querry
-        $sth = $pdo->prepare('SELECT * FROM ownerships WHERE device_id = :device_id');
+        $sth = $pdo->prepare('SELECT * FROM ownerships WHERE device_id = :device_id AND activation = TRUE');
         //Editing parameters
         $sth->bindParam(':device_id', $remote_app_list['device_id'], PDO::PARAM_INT);
         //X ecute query
