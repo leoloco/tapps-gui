@@ -3,20 +3,7 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Ownerships App'), ['action' => 'edit', $ownershipsApp->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Ownerships App'), ['action' => 'delete', $ownershipsApp->id], ['confirm' => __('Are you sure you want to delete # {0}?', $ownershipsApp->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Ownerships Apps'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Ownerships App'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Tapps'), ['controller' => 'Tapps', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Tapp'), ['controller' => 'Tapps', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="ownershipsApps view large-9 medium-8 columns content">
+<div class="ownershipsApps view large-12 medium-12 columns content">
     <h3><?= h($ownershipsApp->id) ?></h3>
     <table class="vertical-table">
         <tr>
