@@ -57,6 +57,8 @@ class OwnershipsController extends AppController
     public function add()
     {
         $user = $this->Auth->user();
+        $appList = array();
+        $deviceList = array();
         
         
         $ownershipsApps = TableRegistry::get('OwnershipsApps');
@@ -65,8 +67,8 @@ class OwnershipsController extends AppController
                 ->where(['user_id' => $user['id']])
                 ->select('tapp_id');
         $resultsApps = $queryApps->toArray();
-        foreach ($queryApps as $article) {
-             debug($article['tapp_id']);
+        foreach ($queryApps as $app) {
+            array_push($appList, $app['tapp_id']);
         }
         
         
@@ -76,7 +78,12 @@ class OwnershipsController extends AppController
                 ->where(['user_id' => $user['id']])
                 ->select('device_id');
         $resultsDevices = $queryDevices->toArray();
+        foreach ($queryDevices as $device) {
+            array_push($deviceList, $device['device_id']);
+        }
         
+        debug($appList);
+        debug($deviceList);
         
         $ownership = $this->Ownerships->newEntity();
         if ($this->request->is('post')) {
