@@ -66,7 +66,7 @@ class OwnershipsController extends AppController
                 ->select('tapp_id');
         $resultsApps = $queryApps->toArray();
         foreach ($queryApps as $article) {
-             debug($article['id']);
+             debug($article['tapp_id']);
         }
         
         
