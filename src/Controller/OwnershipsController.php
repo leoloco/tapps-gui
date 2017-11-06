@@ -86,7 +86,7 @@ class OwnershipsController extends AppController
             $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
             $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
         }
-        $tapps->select('version_latest');
+        //$tapps->select('version_latest');
         $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
         $this->set('_serialize', ['ownership']);
     }
