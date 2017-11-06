@@ -143,6 +143,9 @@ class TappsController extends AppController
      */
     public function isAuthorized($user)
     {
+        if (in_array($this->request->getParam('action'), ['index','view']) && $user['type']==='subscriber'){
+            return true;
+        }
         //Index, view and tapp provisionning authorized to all managers
         if (in_array($this->request->getParam('action'), ['index','add','view']) && $user['type']==='appmanager'){
             return true;
