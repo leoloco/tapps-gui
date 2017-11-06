@@ -58,8 +58,22 @@ class OwnershipsController extends AppController
     {
         $user = $this->Auth->user();
         
+        
         $ownershipsApps = TableRegistry::get('OwnershipsApps');
+        $queryApps = $ownershipsApps
+                ->find()
+                ->where(['user_id' => $user['id']])
+                ->select('tapp_id');
+        $resultsApps = $queryApps->toArray();
+
+        
         $ownershipsDevices = TableRegistry::get('OwnershipsDevices');
+        $queryDevices = $ownershipsDevices
+                ->find()
+                ->where(['user_id' => $user['id']])
+                ->select('device_id');
+        $resultsDevices = $queryDevices->toArray();
+        
         
         $ownership = $this->Ownerships->newEntity();
         if ($this->request->is('post')) {
@@ -75,18 +89,14 @@ class OwnershipsController extends AppController
             $this->Flash->error(__('The ownership could not be saved. Please, try again.'));
         }
         if($user['type']==='subscriber'){
-            $tapps = $ownershipsApps->find('list', ['limit' => 200])
-                    ->where(['user_id' => $user['id']]);
-            $devices = $ownershipsDevices->find('list', ['limit' => 200])
-                    ->where(['user_id' => $user['id']]);
+            $devices = $this->Ownerships->Devices->find('list', ['limit' => 200])->where(['id IN'=> $resultsDevices]);
             $users = $user;
+            $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200])->where(['id IN'=> $resultsApps]);
         }
-        else{
-            $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
-            $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
-            $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
-        }
-        //$tapps->select('version_latest');
+        $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
+        $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
+        $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
+        $tapps->select('version_latest');
         $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
         $this->set('_serialize', ['ownership']);
     }
@@ -157,8 +167,22 @@ class OwnershipsController extends AppController
         if (in_array($this->request->getParam('action'), ['view','index','add','edit']) && $user['type']==='vendor') {
             return true;
         }
-        if (in_array($this->request->getParam('action'), ['view','index','add','edit']) && $user['type']==='subscriber') {
-                return true;
+        /*
+        $ownershipsApps = TableRegistry::get('OwnershipsApps');
+        $queryApp = $ownershipsApps
+                ->find()
+                ->where(['user_id' => $user['id']])
+                ->select('tapp_id');
+        
+        $ownershipsDevices = TableRegistry::get('OwnershipsDevices');
+        $queryDevice = $ownershipsDevices
+                ->find()
+                ->where(['user_id' => $user['id']])
+                ->select('device_id');
+        */
+        
+        if (in_array($this->request->getParam('action'), ['view','index','add','edit']) && $user['type']==='subscriber'){
+            return true;
         }
         //The edit and delete actions are only allowed if the app is owned by the current appmanager
         //Importing tapps table
