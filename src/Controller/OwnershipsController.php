@@ -102,6 +102,9 @@ class OwnershipsController extends AppController
                 $devices = $this->Ownerships->Devices->find('list', ['limit' => 200])->where(['Devices.id IN'=> $deviceList]);
                 $users = $user;
                 $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200])->where(['Tapps.id IN'=> $appList]);
+                $tapps->select('version_latest');
+                $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
+                $this->set('_serialize', ['ownership']);
             }
             else{
                 $this->Flash->error(__('To acces this page you need to own at least both a device and an app.'));
@@ -112,10 +115,11 @@ class OwnershipsController extends AppController
             $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
             $users = $this->Ownerships->Users->find('list', ['limit' => 200]);
             $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200]);
+            $tapps->select('version_latest');
+            $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
+            $this->set('_serialize', ['ownership']);
         }
-        $tapps->select('version_latest');
-        $this->set(compact('ownership', 'devices', 'users', 'tapps','user'));
-        $this->set('_serialize', ['ownership']);
+        
     }
 
     /**
