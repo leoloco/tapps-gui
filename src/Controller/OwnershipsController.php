@@ -60,24 +60,24 @@ class OwnershipsController extends AppController
         $appList = array();
         $deviceList = array();
         
-        
+        //Getting apps owned by the user
         $ownershipsApps = TableRegistry::get('OwnershipsApps');
         $queryApps = $ownershipsApps
                 ->find()
                 ->where(['user_id' => $user['id']])
                 ->select('tapp_id');
-        //$resultsApps = $queryApps->toArray();
+        //Putting all owned apps ids in array
         foreach ($queryApps as $app) {
             array_push($appList, $app['tapp_id']);
         }
         
-        
+        //Getting all devices owned by the user
         $ownershipsDevices = TableRegistry::get('OwnershipsDevices');
         $queryDevices = $ownershipsDevices
                 ->find()
                 ->where(['user_id' => $user['id']])
                 ->select('device_id');
-        //$resultsDevices = $queryDevices->toArray();
+        //Putting all owned devices ids in array
         foreach ($queryDevices as $device) {
             array_push($deviceList, $device['device_id']);
         }
@@ -96,10 +96,17 @@ class OwnershipsController extends AppController
             }
             $this->Flash->error(__('The ownership could not be saved. Please, try again.'));
         }
+        //If the user is a subscriber, he will only be able to provision ownerships with apps and devices he owns
         if($user['type']==='subscriber'){
-            $devices = $this->Ownerships->Devices->find('list', ['limit' => 200])->where(['Devices.id IN'=> $deviceList]);
-            $users = $user;
-            $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200])->where(['Tapps.id IN'=> $appList]);
+            if(!empty($deviceList) && !empty($appList)){
+                $devices = $this->Ownerships->Devices->find('list', ['limit' => 200])->where(['Devices.id IN'=> $deviceList]);
+                $users = $user;
+                $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200])->where(['Tapps.id IN'=> $appList]);
+            }
+            else{
+                $this->Flash->error(__('To acces this page you need to own at least both a device and an app.'));
+            }
+            
         }
         else{
             $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
