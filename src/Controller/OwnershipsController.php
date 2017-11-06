@@ -66,7 +66,7 @@ class OwnershipsController extends AppController
                 ->find()
                 ->where(['user_id' => $user['id']])
                 ->select('tapp_id');
-        $resultsApps = $queryApps->toArray();
+        //$resultsApps = $queryApps->toArray();
         foreach ($queryApps as $app) {
             array_push($appList, $app['tapp_id']);
         }
@@ -77,13 +77,11 @@ class OwnershipsController extends AppController
                 ->find()
                 ->where(['user_id' => $user['id']])
                 ->select('device_id');
-        $resultsDevices = $queryDevices->toArray();
+        //$resultsDevices = $queryDevices->toArray();
         foreach ($queryDevices as $device) {
             array_push($deviceList, $device['device_id']);
         }
         
-        debug($appList);
-        debug($deviceList);
         
         $ownership = $this->Ownerships->newEntity();
         if ($this->request->is('post')) {
@@ -99,9 +97,9 @@ class OwnershipsController extends AppController
             $this->Flash->error(__('The ownership could not be saved. Please, try again.'));
         }
         if($user['type']==='subscriber'){
-            $devices = $this->Ownerships->Devices->find('list', ['limit' => 200])->where(['Devices.id IN'=> $resultsDevices]);
+            $devices = $this->Ownerships->Devices->find('list', ['limit' => 200])->where(['Devices.id IN'=> $deviceList]);
             $users = $user;
-            $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200])->where(['Tapps.id IN'=> $resultsApps]);
+            $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200])->where(['Tapps.id IN'=> $appList]);
         }
         else{
             $devices = $this->Ownerships->Devices->find('list', ['limit' => 200]);
