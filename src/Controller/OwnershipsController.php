@@ -108,6 +108,7 @@ class OwnershipsController extends AppController
             }
             else{
                 $this->Flash->error(__('To acces this page you need to own at least both a device and an app.'));
+                return $this->redirect(['action' => 'index']);
             }
             
         }
