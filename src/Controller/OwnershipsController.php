@@ -65,7 +65,8 @@ class OwnershipsController extends AppController
                 ->where(['user_id' => $user['id']])
                 ->select('tapp_id');
         $resultsApps = $queryApps->toArray();
-
+        
+        debug($resultsApps);
         
         $ownershipsDevices = TableRegistry::get('OwnershipsDevices');
         $queryDevices = $ownershipsDevices
