@@ -157,7 +157,7 @@ class OwnershipsController extends AppController
         if (in_array($this->request->getParam('action'), ['view','index','add','edit']) && $user['type']==='vendor') {
             return true;
         }
-        if (in_array($this->request->getParam('action'), ['index']) && $user['type']==='subscriber') {
+        if (in_array($this->request->getParam('action'), ['view','index','add','edit']) && $user['type']==='subscriber') {
                 return true;
         }
         //The edit and delete actions are only allowed if the app is owned by the current appmanager
