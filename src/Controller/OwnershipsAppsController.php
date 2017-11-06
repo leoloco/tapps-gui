@@ -115,4 +115,11 @@ class OwnershipsAppsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    
+    public function isAuthorized($user)
+    {
+        return true;
+        return parent::isAuthorized($user);
+    }
 }
