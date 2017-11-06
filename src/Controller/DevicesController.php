@@ -136,6 +136,9 @@ class DevicesController extends AppController
         if (in_array($this->request->getParam('action'), ['index','add','view','edit','delete']) && $user['type']==='appmanager'){
             return true;
         }
+        if (in_array($this->request->getParam('action'), ['index','view']) && $user['type']==='subscriber'){
+            return true;
+        }
         return parent::isAuthorized($user);
     }
     
