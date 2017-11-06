@@ -97,7 +97,7 @@ class OwnershipsController extends AppController
             $this->Flash->error(__('The ownership could not be saved. Please, try again.'));
         }
         if($user['type']==='subscriber'){
-            $devices = $this->Ownerships->Devices->find('list', ['limit' => 200])->where(['Devices.id IN'=> $deviceList]);
+            //$devices = $this->Ownerships->Devices->find('list', ['limit' => 200])->where(['Device.id IN'=> $deviceList]);
             $users = $user;
             $tapps = $this->Ownerships->Tapps->find('list', ['limit' => 200])->where(['Tapps.id IN'=> $appList]);
         }
