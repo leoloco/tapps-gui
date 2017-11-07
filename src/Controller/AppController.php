@@ -241,8 +241,7 @@ class AppController extends Controller
                     foreach ($query as $tapp){
                         array_push($appList, $tapp['tapps_id']);
                     }
-                    if(!in_array($appList, $elements['id']))
-                    {
+                    if(!in_array($elements['id'],$appList)){
                         $queryTapps = $tapps->query();
                         $queryTapps->insert(['tapp_id','user_id'])
                                 ->values([
