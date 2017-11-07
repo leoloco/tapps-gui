@@ -180,7 +180,7 @@ class AppController extends Controller
         //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
         $users = TableRegistry::get('Users');
-        $queryUsers = $user->find()->where(['type'=>'vendor']);
+        $queryUsers = $users->find()->where(['type'=>'vendor']);
         foreach ($queryUsers as $user){
             $url = "https://dx-api.thingpark.com/core/latest/api/applications";
             $http = new Client([
