@@ -220,4 +220,39 @@ class AppController extends Controller
             }
         }
     }
+    
+    
+        public function retrieveApps($user){
+        //getting current user
+        $user = $this->Auth->user();
+        //Importing tapps table
+        $tapps = TableRegistry::get('OwnershipsApps');
+        $url = "https://dx-api.thingpark.com/core/latest/api/offers";
+        $http = new Client([
+            'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
+        ]);
+        $response = $http->get($url);
+        $appList = array();
+        //loop trought results and update
+        foreach ($response->json as $elements){
+            if(is_array($elements)){
+                {
+                    $query = $tapps->find()->where(['user_id' => $user['id']]);
+                    foreach ($query as $tapp){
+                        array_push($appList, $tapp['tapps_id']);
+                    }
+                    if(!in_array($tapp, $elements['id']))
+                    {
+                        $queryTapps = $tapps->query();
+                        $queryTapps->insert(['tapp_id','user_id'])
+                                ->values([
+                                    'tapp_id' => $elements['id'],
+                                    'user_id' => $user['id'],
+                                ])
+                                ->execute();
+                    }
+                }
+            }
+        }
+    }
 }
