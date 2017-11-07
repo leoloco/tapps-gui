@@ -202,6 +202,7 @@ class UsersController extends AppController
                         if ($user){
                             $this->Auth->setUser($user);
                             AppController::retrieveApps($user);
+                            AppController::retrieveDevicesApplications($user);
                             return $this->redirect($this->Auth->redirectUrl());
                         }
                     }

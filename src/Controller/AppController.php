@@ -179,6 +179,45 @@ class AppController extends Controller
         $user = $this->Auth->user();
         //Importing tapps table
         $tapps = TableRegistry::get('Tapps');
+        $users = TableRegistry::get('Users');
+        $queryUsers = $user->find()->where(['type'=>'vendor']);
+        foreach ($queryUsers as $user){
+            $url = "https://dx-api.thingpark.com/core/latest/api/applications";
+            $http = new Client([
+                'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
+            ]);
+            $response = $http->get($url);
+            //loop trought results and update
+            foreach ($response->json as $elements){
+                if(is_array($elements)){
+                    if($tapps->find()->where(['tpid' => $elements['id']])->isEmpty()){
+                        $queryTapps = $tapps->query();
+                        $queryTapps->insert(['tpid','name','cdn_uri','cdn_login','cdn_password','user_id'])
+                                ->values([
+                                    'tpid' => $elements['id'],
+                                    'name' => $elements['name'],
+                                    'cdn_uri' => '0',
+                                    'cdn_login' => '0',
+                                    'cdn_password' => '0',
+                                    'user_id' => $user['id'],
+                                ])
+                                ->execute();
+                    }
+                }
+            }
+        } 
+    }
+    /*
+     * Retrive devices and applications from user scope 
+     * Note this function should'nt be used because apps and devices should be provisionned by the appmanager
+     * 
+     * @return null
+     
+    public function retrieveDevicesApplications($user){
+        //getting current user
+        $user = $this->Auth->user();
+        //Importing tapps table
+        $tapps = TableRegistry::get('Tapps');
         //Importing devices table
         $devices = TableRegistry::get('Devices');
         $url = "https://dx-api.thingpark.com/core/latest/api/applications";
@@ -219,10 +258,9 @@ class AppController extends Controller
                 }
             }
         }
-    }
+    }*/
     
-    
-        public function retrieveApps($user){
+    public function retrieveApps($user){
         //getting current user
         $user = $this->Auth->user();
         //Importing tapps table
