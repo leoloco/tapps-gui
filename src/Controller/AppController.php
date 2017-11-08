@@ -174,7 +174,7 @@ class AppController extends Controller
      * 
      * @return null
      */
-    public function retrieveDevicesApplications($user){
+    public function retrieveApps($user){
         //getting current user
         $user = $this->Auth->user();
         //Importing tapps table
@@ -260,7 +260,7 @@ class AppController extends Controller
         }
     }*/
     
-    public function retrieveApps($user){
+    public function retrieveOwnershipsApps($user){
         //getting current user
         $user = $this->Auth->user();
         //Importing tapps table
