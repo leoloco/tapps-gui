@@ -283,14 +283,16 @@ class AppController extends Controller
                     }
                     debug($appList);
                     debug($elements['items'][0]['productId']);
-                    if(!in_array($elements['items'][0]['productId'],$appList)){
-                        $queryTapps = $tapps->query();
-                        $queryTapps->insert(['tapp_id','user_id'])
-                                ->values([
-                                    'tapp_id' => $elements['id'],
-                                    'user_id' => $user['id'],
-                                ])
-                                ->execute();
+                    foreach ($elements['items'] as $element){
+                        if(!in_array($element['productId'],$appList)){
+                            $queryTapps = $tapps->query();
+                            $queryTapps->insert(['tapp_id','user_id'])
+                                    ->values([
+                                        'tapp_id' => $element['productId'],
+                                        'user_id' => $user['id'],
+                                    ])
+                                    ->execute();
+                        }
                     }
                 }
             }
