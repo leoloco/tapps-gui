@@ -278,7 +278,7 @@ class AppController extends Controller
                 {
                     $query = $tapps->find()->where(['user_id' => $user['id']]);
                     foreach ($query as $tapp){
-                        array_push($appList, $tapp['tapp_id']);
+                        array_push($appList, $tapp['tpid']);
                     }
                     debug($appList);
                     if(!in_array($elements['id'],$appList)){
