@@ -273,18 +273,15 @@ class AppController extends Controller
         $appList = array();
         //loop trought results and update
         foreach ($response->json as $elements){
-            debug($elements);
             if(is_array($elements)){
                 {
                     $query = $tapps->find()->where(['user_id' => $user['id']]);
                     foreach ($query as $tapp){
-                        debug($tapp);
                         array_push($appList, $tapp['tpid']);
                     }
-                    debug($appList);
-                    debug($elements['items'][0]['productId']);
                     foreach ($elements['items'] as $element){
                         if(!in_array($element['productId'],$appList)){
+                            debug($element['productId']);
                             $queryTapps = $tapps->query();
                             $queryTapps->insert(['tapp_id','user_id'])
                                     ->values([
