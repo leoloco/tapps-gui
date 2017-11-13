@@ -282,13 +282,20 @@ class AppController extends Controller
                     foreach ($elements['items'] as $element){
                         if(!in_array($element['productId'],$appList)){
                             debug($element['productId']);
+                            
+                            $newOwnershipsApp = $tapps->newEntity([
+                                'tapp_id' => $element['productId'],
+                                'user_id' => $user['id'],
+                            ]);
+                            $tapps->save($newOwnershipsApp);
+                            /*
                             $queryTapps = $tapps->query();
                             $queryTapps->insert(['tapp_id','user_id'])
                                     ->values([
                                         'tapp_id' => $element['productId'],
                                         'user_id' => $user['id'],
                                     ])
-                                    ->execute();
+                                    ->execute();*/
                         }
                     }
                 }
