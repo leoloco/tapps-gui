@@ -281,7 +281,8 @@ class AppController extends Controller
                         array_push($appList, $tapp['tpid']);
                     }
                     debug($appList);
-                    if(!in_array($elements['id'],$appList)){
+                    debug($elements['items'][0]['productId']);
+                    if(!in_array($elements['items'][0]['productId'],$appList)){
                         $queryTapps = $tapps->query();
                         $queryTapps->insert(['tapp_id','user_id'])
                                 ->values([
