@@ -20,6 +20,7 @@ class OwnershipsAppsController extends AppController
      */
     public function index()
     {
+        AppController::retrieveOwnershipsApps($this->Auth->user());
         $this->paginate = [
             'contain' => ['Users', 'Tapps']
         ];
