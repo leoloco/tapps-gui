@@ -71,8 +71,8 @@ class OwnershipsAppsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        //$rules->add($rules->existsIn(['user_id'], 'Users'));
-        //$rules->add($rules->existsIn(['tapp_id'], 'Tapps'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['tapp_id'], 'Tapps'));
 
         return $rules;
     }
