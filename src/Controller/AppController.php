@@ -283,26 +283,23 @@ class AppController extends Controller
                     foreach ($elements['items'] as $element){
                         $query = $tapps->find()->select(['id'])->where(['tpid'=>$element['productId']]);
                         foreach ($query as $tapp){
-                            debug($tapp);
+                            if(!in_array($tapp['id'],$appList)){
+                                $newOwnershipsApp = $ownershipsApps->newEntity([
+                                    'tapp_id' => $tapp['id'],
+                                    'user_id' => $user['id'],
+                                ]);
+                                $ownershipsApps->save($newOwnershipsApp);
+                                /*
+                                $queryTapps = $tapps->query();
+                                $queryTapps->insert(['tapp_id','user_id'])
+                                        ->values([
+                                            'tapp_id' => $element['productId'],
+                                            'user_id' => $user['id'],
+                                        ])
+                                        ->execute();*/
+                            }
                         }
-                        if(!in_array($element['productId'],$appList)){
-                            debug($element['productId']);
-                            /*
-                            $newOwnershipsApp = $ownershipsApps->newEntity([
-                                'tapp_id' => $element['productId'],
-                                'user_id' => $user['id'],
-                            ]);
-                            $ownershipsApps->save($newOwnershipsApp);
-                            */
-                            /*
-                            $queryTapps = $tapps->query();
-                            $queryTapps->insert(['tapp_id','user_id'])
-                                    ->values([
-                                        'tapp_id' => $element['productId'],
-                                        'user_id' => $user['id'],
-                                    ])
-                                    ->execute();*/
-                        }
+                        
                     }
                 }
             }
