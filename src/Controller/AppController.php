@@ -281,17 +281,18 @@ class AppController extends Controller
                         array_push($appList, $tapp['tapp_id']);
                     }
                     foreach ($elements['items'] as $element){
-                        if(!in_array($element['productId'],$appList)){
-                            debug($element['productId']);
-                            $query = $tapps->find()->select(['id'])->where(['tpid'=>$element['productId']]);
+                        $query = $tapps->find()->select(['id'])->where(['tpid'=>$element['productId']]);
                             $result = $query->execute();
                             debug($result);
+                        if(!in_array($element['productId'],$appList)){
+                            debug($element['productId']);
                             /*
                             $newOwnershipsApp = $ownershipsApps->newEntity([
                                 'tapp_id' => $element['productId'],
                                 'user_id' => $user['id'],
-                            ]);*/
+                            ]);
                             $ownershipsApps->save($newOwnershipsApp);
+                            */
                             /*
                             $queryTapps = $tapps->query();
                             $queryTapps->insert(['tapp_id','user_id'])
