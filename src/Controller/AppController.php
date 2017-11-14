@@ -282,8 +282,9 @@ class AppController extends Controller
                     }
                     foreach ($elements['items'] as $element){
                         $query = $tapps->find()->select(['id'])->where(['tpid'=>$element['productId']]);
-                            $result = $query->execute();
-                            debug($result);
+                        foreach ($query as $tapp){
+                            debug($tapp);
+                        }
                         if(!in_array($element['productId'],$appList)){
                             debug($element['productId']);
                             /*
