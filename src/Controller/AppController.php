@@ -264,7 +264,8 @@ class AppController extends Controller
         //getting current user
         $user = $this->Auth->user();
         //Importing tapps table
-        $tapps = TableRegistry::get('OwnershipsApps');
+        $ownershipsApps = TableRegistry::get('OwnershipsApps');
+        $tapps = TableRegistry::get('Tapps');
         $url = "https://dx-api.thingpark.com/core/latest/api/offers";
         $http = new Client([
             'headers' => ['Authorization' => 'Bearer '.$user['API_KEY'], 'Accept: application/json']
@@ -275,19 +276,22 @@ class AppController extends Controller
         foreach ($response->json as $elements){
             if(is_array($elements)){
                 {
-                    $query = $tapps->find()->where(['user_id' => $user['id']]);
+                    $query = $ownershipsApps->find()->where(['user_id' => $user['id']]);
                     foreach ($query as $tapp){
-                        array_push($appList, $tapp['tpid']);
+                        array_push($appList, $tapp['tapp_id']);
                     }
                     foreach ($elements['items'] as $element){
                         if(!in_array($element['productId'],$appList)){
                             debug($element['productId']);
-                            
-                            $newOwnershipsApp = $tapps->newEntity([
+                            $query = $tapps->find()->select(['id'])->where(['tpid'=>$element['productId']]);
+                            $result = $query->execute();
+                            debug($result);
+                            /*
+                            $newOwnershipsApp = $ownershipsApps->newEntity([
                                 'tapp_id' => $element['productId'],
                                 'user_id' => $user['id'],
-                            ]);
-                            $tapps->save($newOwnershipsApp);
+                            ]);*/
+                            $ownershipsApps->save($newOwnershipsApp);
                             /*
                             $queryTapps = $tapps->query();
                             $queryTapps->insert(['tapp_id','user_id'])
