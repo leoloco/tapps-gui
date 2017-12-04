@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sth->execute();
             //Putting results in array
             while ($row = $sth->fetch()){
-                array_push($local_app_list, ['id' => $row['tpid'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password'],'cdn_uri' => $row['cdn_uri'],'version'=>$row['version_latest']]);
+                array_push($local_app_list, ['id' => $row['tpid'],'cdn_login' => $row['cdn_login'],'cdn_password' => $row['cdn_password'],'cdn_uri' => $row['cdn_uri'],'version'=>$row['version_latest'],'type'=>$row['type']]);
             }
         }
         $remote_app_list=$remote_app_list['apps'];
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(!in_array($local_id, $remote_ids)){
                 foreach ($local_app_list as $local_app){
                     if($local_app['id']===$local_id){
-                        array_push($returned_app_list['new'], ['id'=>$local_app['id'],'cdn_login' => $local_app['cdn_login'],'cdn_password' => $local_app['cdn_password'],'cdn_uri' => $local_app['cdn_uri'],'version'=>$local_app['version_latest']]);
+                        array_push($returned_app_list['new'], ['id'=>$local_app['id'],'cdn_login' => $local_app['cdn_login'],'cdn_password' => $local_app['cdn_password'],'cdn_uri' => $local_app['cdn_uri'],'version'=>$local_app['version_latest'],'type'=>$local_app['type']]);
                     }
                 }
             }
