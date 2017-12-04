@@ -11,7 +11,8 @@ CREATE TABLE tapps (
   cdn_uri varchar(255) NOT NULL,
   cdn_login varchar(255) NOT NULL,
   cdn_password varchar(255) NOT NULL,
-  user_id int NOT NULL
+  user_id int NOT NULL,
+  type varchar(255)
 );
 
 DROP TABLE IF EXISTS devices;
