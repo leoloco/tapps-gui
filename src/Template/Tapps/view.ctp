@@ -35,6 +35,10 @@
             <td><?= $tapp->has('user') ? $this->Html->link($tapp->user->name, ['controller' => 'Users', 'action' => 'view', $tapp->user->id]) : '' ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Type') ?></th>
+            <td><?= h($tapp->type) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($tapp->id) ?></td>
         </tr>

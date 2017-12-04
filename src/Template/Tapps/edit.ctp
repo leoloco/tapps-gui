@@ -15,6 +15,7 @@
             echo $this->Form->control('cdn_login');
             echo $this->Form->control('cdn_password');
             echo $this->Form->control('user_id', ['options' => $users]);
+            echo $this->Form->control('type');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

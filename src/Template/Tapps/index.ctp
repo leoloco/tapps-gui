@@ -16,6 +16,7 @@
                 <th scope="col"><?= $this->Paginator->sort('cdn_login') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('cdn_password') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('type') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -30,6 +31,7 @@
                 <td><?= h($tapp->cdn_login) ?></td>
                 <td><?= h($tapp->cdn_password) ?></td>
                 <td><?= $tapp->has('user') ? $this->Html->link($tapp->user->name, ['controller' => 'Users', 'action' => 'view', $tapp->user->id]) : '' ?></td>
+                <td><?= h($tapp->type) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tapp->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tapp->id]) ?>
