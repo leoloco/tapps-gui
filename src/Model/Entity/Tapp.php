@@ -7,13 +7,14 @@ use Cake\ORM\Entity;
  * Tapp Entity
  *
  * @property int $id
- * @property string $tp_id
+ * @property string $tpid
  * @property string $name
  * @property string $version_latest
  * @property string $cdn_uri
  * @property string $cdn_login
  * @property string $cdn_password
  * @property int $user_id
+ * @property string $type
  *
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Ownership[] $ownerships

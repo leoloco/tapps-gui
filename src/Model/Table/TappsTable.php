@@ -9,9 +9,9 @@ use Cake\Validation\Validator;
 /**
  * Tapps Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Tps
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\HasMany $Ownerships
+ * @property \Cake\ORM\Association\HasMany $OwnershipsApps
  *
  * @method \App\Model\Entity\Tapp get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tapp newEntity($data = null, array $options = [])
@@ -37,11 +37,15 @@ class TappsTable extends Table
         $this->setTable('tapps');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Ownerships', [
+            'foreignKey' => 'tapp_id'
+        ]);
+        $this->hasMany('OwnershipsApps', [
             'foreignKey' => 'tapp_id'
         ]);
     }
@@ -57,6 +61,10 @@ class TappsTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
+
+        $validator
+            ->requirePresence('tpid', 'create')
+            ->notEmpty('tpid');
 
         $validator
             ->requirePresence('name', 'create')
@@ -77,6 +85,9 @@ class TappsTable extends Table
         $validator
             ->requirePresence('cdn_password', 'create')
             ->notEmpty('cdn_password');
+
+        $validator
+            ->allowEmpty('type');
 
         return $validator;
     }
